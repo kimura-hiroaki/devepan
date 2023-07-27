@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta name="robots" content="noindex" />
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+        <meta name="format-detection" content="telephone=no" />
+        <!-- meta情報 -->
+        <title>デベパン</title>
+        <meta name="description" content="" />
+        <meta name="keywords" content="" />
+        <!-- ogp -->
+        <meta property="og:title" content="" />
+        <meta property="og:type" content="" />
+        <meta property="og:url" content="" />
+        <meta property="og:image" content="" />
+        <meta property="og:site_name" content="" />
+        <meta property="og:description" content="" />
+        <meta name="twitter:card" content="summary" />
+        <!-- ファビコン -->
+        <link rel="icon" href="#" />
+        <!-- font -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link href="https://fonts.googleapis.com/css2?family=Istok+Web:wght@400;700&family=Kiwi+Maru:wght@400;500&display=swap" rel="stylesheet" />
+        <!-- css -->
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
+        <link rel="stylesheet" href="./css/style.css" />
+        <!-- JavaScript -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+        <script defer src="./js/script.js"></script>
+    </head>
+    <body>
+        <header class="l-header">
+            <div class="p-header">
+                <div class="p-header__inner l-inner">
+                    <h1 class="p-header__logo">
+                        <a href="#">
+                            <img src="./images/common/logo.svg" alt="ロゴ" />
+                        </a>
+                    </h1>
+                    <nav class="p-header__globalNav">
+                        <div class="p-globalNav">
+                            <ul class="p-globalNav__menus">
+                                <li class="p-globalNav__menu is-selected">
+                                    <a href="#">
+                                        <img src="./images/common/panda.svg" alt="HOME" />
+                                        <span>HOME</span>
+                                    </a>
+                                </li>
+                                <li class="p-globalNav__menu">
+                                    <a href="#">
+                                        <img src="./images/common/map.svg" alt="ご案内" />
+                                        <span>ご案内</span>
+                                    </a>
+                                </li>
+                                <li class="p-globalNav__menu js-subMenu">
+                                    <a href="#">
+                                        <img src="./images/common/animal.svg" alt="動物たち" />
+                                        <span>動物たち</span>
+                                    </a>
+                                    <div class="p-globalNav__nav">
+                                        <ul class="p-globalNav__subMenus">
+                                            <li class="p-globalNav__subMenu">
+                                                <a href="#"><span>・パンダ</span></a>
+                                            </li>
+                                            <li class="p-globalNav__subMenu">
+                                                <a href="#"><span>・キリン</span></a>
+                                            </li>
+                                            <li class="p-globalNav__subMenu">
+                                                <a href="#"><span>・レッサーパンダ</span></a>
+                                            </li>
+                                            <li class="p-globalNav__subMenu">
+                                                <a href="#"><span>・ゴリラ</span></a>
+                                            </li>
+                                            <li class="p-globalNav__subMenu">
+                                                <a href="#"><span>・ハシビロコウ</span></a>
+                                            </li>
+                                            <li class="p-globalNav__subMenu">
+                                                <a href="#"><span>・カピバラ</span></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="p-globalNav__menu">
+                                    <a href="#">
+                                        <img src="./images/common/star.svg" alt="園について" />
+                                        <span>園について</span>
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul class="p-globalNav__contact">
+                                <li class="p-globalNav__contact-link">
+                                    <a href="#">
+                                        <span class="u-desktop">お問い合わせ</span>
+                                        <div class="p-globalNav__contact-img"></div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+                    <div class="p-header__hamburger">
+                        <div class="p-hamburger js-hamburger">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </div>
+                    <div class="p-header__drawer">
+                        <div class="p-drawer">
+                            <div class="p-drawer__inner l-inner">
+                                <nav class="p-drawer__nav">
+                                    <ul class="p-drawer__menus">
+                                        <li class="p-drawer__menu">
+                                            <a href="#">
+                                                <img src="./images/common/panda.svg" alt="HOME" />
+                                                <span>HOME</span>
+                                            </a>
+                                        </li>
+                                        <li class="p-drawer__menu">
+                                            <a href="#">
+                                                <img src="./images/common/map.svg" alt="ご案内" />
+                                                <span>ご案内</span>
+                                            </a>
+                                        </li>
+                                        <li class="p-drawer__menu js-drawer-subMenu is-open">
+                                            <a href="">
+                                                <img src="./images/common/animals.svg" alt="動物たち" />
+                                                <span>動物たち</span>
+                                            </a>
+                                            <ul class="p-drawer__subMenus">
+                                                <li class="p-drawer__subMenu">
+                                                    <a href="#"><span>・パンダ</span></a>
+                                                </li>
+                                                <li class="p-drawer__subMenu">
+                                                    <a href="#"><span>・キリン</span></a>
+                                                </li>
+                                                <li class="p-drawer__subMenu">
+                                                    <a href="#"><span>・レッサーパンダ</span></a>
+                                                </li>
+                                                <li class="p-drawer__subMenu">
+                                                    <a href="#"><span>・ゴリラ</span></a>
+                                                </li>
+                                                <li class="p-drawer__subMenu">
+                                                    <a href="#"><span>・ハシビロコウ</span></a>
+                                                </li>
+                                                <li class="p-drawer__subMenu">
+                                                    <a href="#"><span>・カピバラ</span></a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="p-drawer__menu">
+                                            <a href="#">
+                                                <img src="./images/common/star.svg" alt="園について" />
+                                                <span>園について</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <main>
+            <div class="l-singleMv">
+                <div class="p-singleMv">
+                    <div class="p-singleMv__inner l-inner">
+                        <div class="p-singleMv__items">
+                            <div class="p-singleMv__item">
+                                <img src="./images/top/about_01.jpg" alt="メインビュー" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="l-article">
+                <div class="p-article">
+                    <div class="p-article__inner l-inner">
+                        <div class="p-article__box">
+                            <div class="p-article__box-inner">
+                                <div class="p-article__date">
+                                    <span>2021.10.10記事</span>
+                                    <span>2022.06.10更新</span>
+                                </div>
+                                <h2 class="p-article__title">園について</h2>
+                                <p>
+                                    当園は、パンダをはじめとする様々な動物たちがのびのび生活している国内最大級の動物園です。<br />
+                                    全100匹の動物たちが園内で皆様をお待ちしています。<br />
+                                    ぜひ当園に登園して見て下さい。
+                                </p>
+                                <p>飼育している動物たちは、パンダ、キリン、ぞう、ライオン、ひょう、サル、オラウータン、シロクマ、ペンギン、アライくま、レッサーぱんだ、ごりらたちです。</p>
+                                <p>
+                                    特にサルは多く生活していて、20匹を超えてきます。<br />
+                                    餌を欲しがる子もいますので餌やりもできます。
+                                </p>
+                                <p>ペンギンやライオンには飼育員が毎日2回餌をあげていますので、観察も可能です。</p>
+                                <p>注目のパンダは一生笹を食べていますのでぜひ注目してあげて下さい。</p>
+                                <p>
+                                    ～～パンダ豆知識～～<br />
+                                    パンダという名前が初めて登場するのは1825年。ヒマラヤで発見されたこの動物は中型の大きさで、ふさふさとした尾とキツネに似た白い顔立ちを持つ「赤錆色」の格好の良い動物と記されています。これはまさにレッサーパンダのことです。どちらもタケを食べるこの2つの動物は大きい方がジャイアントパンダ、小さい方がレッサーパンダと名付けられました。
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer class="l-footer l-footer--none">
+            <div class="p-footer">
+                <div class="p-footer__inner l-inner">
+                    <div class="p-footer__img">
+                        <img src="./images/common/logo.svg" alt="ロゴ" />
+                    </div>
+                    <nav class="p-footer__nav">
+                        <ul class="p-footer__links">
+                            <li class="p-footer__link">
+                                <a href="#">
+                                    <img src="./images/common/panda.svg" alt="HOME" />
+                                    <span>HOME</span>
+                                </a>
+                            </li>
+                            <li class="p-footer__link">
+                                <a href="#">
+                                    <img src="./images/common/map.svg" alt="ご案内" />
+                                    <span>ご案内</span>
+                                </a>
+                            </li>
+                            <li class="p-footer__link">
+                                <a href="#">
+                                    <img src="./images/common/animal.svg" alt="動物たち" />
+                                    <span>動物たち</span>
+                                </a>
+                            </li>
+                            <li class="p-footer__link">
+                                <a href="#">
+                                    <img src="./images/common/star.svg" alt="園について" />
+                                    <span>園について</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <p class="p-footer__copy">presenterd by debepan</p>
+                </div>
+            </div>
+        </footer>
+    </body>
+</html>
