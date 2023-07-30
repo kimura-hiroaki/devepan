@@ -47,15 +47,20 @@
                             </div>
                             <p class="p-mv__top-text c-text">デベパン動物園の今を発信。テキストテキストテキスト</p>
                             <div class="p-mv__slider p-mv__slider--info js-mv-slider">
-                                <div class="p-mv__slider-item p-mv__slider-item--info">
-                                    <img src="./images/info2/mv_01.png" alt="Welcome to DEBEPAN" />
-                                </div>
-                                <div class="p-mv__slider-item p-mv__slider-item--info">
-                                    <img src="./images/info2/giraff.jpg" alt="Welcome to DEBEPAN" />
-                                </div>
-                                <div class="p-mv__slider-item p-mv__slider-item--info">
-                                    <img src="./images/info2/panda-hi.jpg" alt="Welcome to DEBEPAN" />
-                                </div>
+                                <?php if (have_posts()) : ?>
+                                    <?php while (have_posts()) : ?>
+                                        <?php the_post(); ?>
+                                        <div class="p-mv__slider-item p-mv__slider-item--info">
+                                            <?php
+                                            if (has_post_thumbnail()) {
+                                                the_post_thumbnail();
+                                            } else {
+                                                echo get_image_html('/images/noimg.png', 'no-image');
+                                            }
+                                            ?>
+                                        </div>
+                                    <?php endwhile; ?>
+                                <?php endif; ?>
                             </div>
                         </div>
                     </div>
@@ -88,7 +93,12 @@
                                     <div class="p-card__tag c-tag"><?php my_the_post_category(true) ?></div>
                                     <h3 class="p-card__title"><?php the_title(); ?></h3>
                                     <p class="p-card__text c-text">
-                                        <?php echo $first_content ?>
+                                        <?php
+                                        $words_limit = 85;
+                                        $content = get_the_content();
+                                        $first_content = wp_trim_words($content, $words_limit, '');
+                                        echo $first_content
+                                        ?>
                                 </div>
                             </div>
                         <?php endwhile; ?>
@@ -96,33 +106,20 @@
                 </div>
                 <div class="p-cards__nav">
                     <div class="p-nav">
-                        <ul class="p-nav__pager">
-                            <li class="p-nav__page">
-                                <a href="#">1</a>
-                            </li>
-                            <li class="p-nav__page dots"></li>
-                            <li class="p-nav__page is-active">
-                                <a href="#">3</a>
-                            </li>
-                            <li class="p-nav__page dots"></li>
-                            <li class="p-nav__page">
-                                <a href="#">5</a>
-                            </li>
-                        </ul>
-                        <div class="p-nav__arrows">
-                            <div class="p-nav__arrow">
-                                <a href="#">
-                                    <img src="./images/common/prev-arrow2.svg" alt="前のページへ" />
-                                    <span>前のページへ</span>
-                                </a>
-                            </div>
-                            <div class="p-nav__arrow">
-                                <a href="#">
-                                    <span>次のページへ</span>
-                                    <img src="./images/common/next-arrow2.svg" alt="次のページへ" />
-                                </a>
-                            </div>
-                        </div>
+                        <?php
+                        global $wp_query;
+                        $big = 9999999999;
+                        $arg = array(
+                            'base' => str_replace($big, '%#%', esc_url(get_pagenum_link($big))),
+                            'current' => max(1, get_query_var('paged')),
+                            'total'   => $wp_query->max_num_pages,
+                            'type'    => 'list',
+                            'mid_size' => 0,
+                            'prev_next' => false,
+                        );
+                        echo paginate_links($arg);
+                        ?>
+                        <?php get_template_part("template-parts/pagination-nextprev"); ?>
                     </div>
                 </div>
             </div>

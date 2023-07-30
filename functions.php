@@ -50,12 +50,50 @@ function add_defer($tag, $handle)
 }
 add_filter('script_loader_tag', 'add_defer', 10, 2);
 
+/********************
+ *Breacrumb navXT関連
+ ***********************/
+/*
+// Breacrumb navXT のトップページの表記を書き換える
+add_filter('bcn_breadcrumb_title', 'nskw_bcn_breadcrumb_title_filter', 10, 2);
+function nskw_bcn_breadcrumb_title_filter($title, $type = null)
+{
+    if ('home' === $type[0]) {
+        $title = 'ホーム';
+    }
+    return $title;
+}
+*/
+
+/********************
+ *Contact Form 7関連
+ ***********************/
 // Contact Form 7で自動挿入されるPタグ、brタグを削除
 add_filter('wpcf7_autop_or_not', 'wpcf7_autop_return_false');
 function wpcf7_autop_return_false()
 {
     return false;
 }
+/*
+// Contact Form7の送信ボタンをクリックした後の遷移先設定
+add_action('wp_footer', 'add_origin_thanks_page');
+function add_origin_thanks_page()
+{
+    $contact = home_url('/contact/thanks/');
+    $download = home_url('/download/thanks/');
+    echo <<< EOC
+    <script>
+        var thanksPage = {
+            65: '{$contact}',
+            5: '{$download}',
+        };
+        document.addEventListener( 'wpcf7mailsent', function( event ) {
+            location = thanksPage[event.detail.contactFormId];
+        }, false );
+    </script>
+    EOC;
+}
+*/
 
 /********************
  *API
@@ -221,42 +259,3 @@ function my_searchform_shortcode($attrs, $content = '')
 }
 
 add_shortcode('search_form', 'my_searchform_shortcode');
-/*
-// Breacrumb navXT のトップページの表記を書き換える
-add_filter('bcn_breadcrumb_title', 'nskw_bcn_breadcrumb_title_filter', 10, 2);
-function nskw_bcn_breadcrumb_title_filter($title, $type = null)
-{
-    if ('home' === $type[0]) {
-        $title = 'ホーム';
-    }
-    return $title;
-}
-
-// Contact Form7の送信ボタンをクリックした後の遷移先設定
-add_action('wp_footer', 'add_origin_thanks_page');
-function add_origin_thanks_page()
-{
-    $contact = home_url('/contact/thanks/');
-    $download = home_url('/download/thanks/');
-    echo <<< EOC
-     <script>
-       var thanksPage = {
-         65: '{$contact}',
-         5: '{$download}',
-       };
-     document.addEventListener( 'wpcf7mailsent', function( event ) {
-       location = thanksPage[event.detail.contactFormId];
-     }, false );
-     </script>
-     EOC;
-}
-
-//$_SESSIONを使える様にする
-function init_sessions()
-{
-    if (!session_id()) {
-        session_start();
-    }
-}
-add_action('init', 'init_sessions');
-*/

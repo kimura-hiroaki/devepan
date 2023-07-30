@@ -5,11 +5,13 @@
             <div class="p-singleMv__inner l-inner">
                 <div class="p-singleMv__items">
                     <div class="p-singleMv__item">
-                        <?php if (has_post_thumbnail()) : ?>
-                            <?php the_post_thumbnail(); ?>
-                        <?php else : ?>
-                            <img src="<?php echo esc_url(get_template_directory_uri() . '/images/noimg.png'); ?>" alt="no-image">
-                        <?php endif; ?>
+                        <?php
+                        if (has_post_thumbnail()) {
+                            the_post_thumbnail();
+                        } else {
+                            echo get_image_html('/images/noimg.png', 'no-image');
+                        }
+                        ?>
                     </div>
                 </div>
             </div>

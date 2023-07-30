@@ -2063,6 +2063,7 @@ main {
 	width: 1.5625rem;
 }
 
+.page-numbers,
 .p-nav__pager {
 	-webkit-box-align: center;
 	-ms-flex-align: center;
@@ -2077,7 +2078,7 @@ main {
 
 .p-nav__page {
 	background-color: #fff;
-	border: 2px solid #fff;
+	/*  border: 2px solid #fff; */
 	border-radius: 50%;
 	height: 50px;
 	height: 3.125rem;
@@ -2085,6 +2086,7 @@ main {
 	width: 3.125rem;
 }
 
+.p-nav ul li+li,
 .p-nav__page+.p-nav__page {
 	margin-left: 48px;
 	margin-left: 3.0rem;
@@ -2117,6 +2119,42 @@ main {
 	-ms-flex-pack: center;
 	justify-content: center;
 	width: 100%;
+}
+
+.p-nav ul li a,
+.p-nav ul li span {
+	-webkit-box-align: center;
+	-ms-flex-align: center;
+	align-items: center;
+	display: block;
+	display: -webkit-inline-box;
+	display: -ms-inline-flexbox;
+	display: inline-flex;
+	font-size: 16px;
+	font-size: 1rem;
+	height: 100%;
+	-webkit-box-pack: center;
+	-ms-flex-pack: center;
+	justify-content: center;
+	border-radius: 50%;
+	height: 50px;
+	height: 3.125rem;
+	width: 50px;
+	width: 3.125rem;
+	background-color: #fff;
+}
+
+.p-nav ul li .current {
+	border: 2px solid #171717;
+}
+
+.p-nav ul li .dots {
+	color: #FFF;
+	background-color: #fff;
+	height: 10px;
+	height: 0.625rem;
+	width: 10px;
+	width: 0.625rem;
 }
 
 .p-pageMv {

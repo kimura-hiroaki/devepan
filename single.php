@@ -5,7 +5,13 @@
             <div class="p-singleMv__inner l-inner">
                 <div class="p-singleMv__items">
                     <div class="p-singleMv__item">
-                        <img src="./images/info2/mv_01.png" alt="メインビュー" />
+                        <?php
+                        if (has_post_thumbnail()) {
+                            the_post_thumbnail();
+                        } else {
+                            echo get_image_html('/images/noimg.png', 'no-image');
+                        }
+                        ?>
                     </div>
                 </div>
             </div>
@@ -30,30 +36,7 @@
                         <div class="p-nav__btn">
                             <a href="#" class="c-btn">一覧をみる</a>
                         </div>
-                        <div class="p-nav__arrows">
-                            <div class="p-nav__arrow">
-                                <?php
-                                $image_html = get_image_html('/images/common/prev-arrow2.svg', '前のページへ');
-                                $text = '前のページへ';
-                                $link_title = $image_html . '<span>' . $text . '</span>';
-                                previous_post_link(
-                                    '%link',
-                                    $link_title
-                                );
-                                ?>
-                            </div>
-                            <div class="p-nav__arrow">
-                                <?php
-                                $image_html = get_image_html('/images/common/next-arrow2.svg', '次のページへ');
-                                $text = '次のページへ';
-                                $link_title = '<span>' . $text . '</span>' . $image_html;
-                                previous_post_link(
-                                    '%link',
-                                    $link_title
-                                );
-                                ?>
-                            </div>
-                        </div>
+                        <?php get_template_part("template-parts/pagination-nextprev"); ?>
                     </div>
                 </div>
             </div>

@@ -1,6 +1,4 @@
 <?php get_header(); ?>
-
-
 <!-- content -->
 <div id="content" class="m_one m_404">
     <div class="l-inner">
@@ -21,5 +19,4 @@
         </main><!-- /primary -->
     </div><!-- /inner -->
 </div><!-- /content -->
-
 <?php get_footer(); ?>
