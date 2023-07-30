@@ -119,21 +119,6 @@ function is_openGarden()
     }
     return $is_open;
 }
-
-//画像の挿入
-function get_image_html($image_url, $alt_text)
-{
-    // 画像のソースURLをesc_url関数を使ってエスケープします
-    $image_src = esc_url(get_template_directory_uri() . $image_url);
-
-    // alt属性のテキストをesc_attr関数を使ってエスケープします
-    $alt_text = esc_attr($alt_text);
-
-    // 画像とテキストのHTMLを組み合わせます
-    $image_html = '<img src="' . $image_src . '" alt="' . $alt_text . '" />';
-    return $image_html;
-}
-
 // アーカイブタイトル書き換え
 function my_archive_title($title)
 {
@@ -164,7 +149,6 @@ function my_archive_title($title)
 };
 add_filter('get_the_archive_title', 'my_archive_title');
 
-//カテゴリー名の入力（リンク付与）
 function my_the_post_category($anchor = true)
 {
     $category = get_the_category();
@@ -198,12 +182,16 @@ function my_get_tag_items($id = 0)
  */
 function my_posts_search($search, $wp_query)
 {
+
     // 検索結果ページ・メインクエリ・管理画面以外の3つの条件が揃った場合
     if ($wp_query->is_search() && $wp_query->is_main_query() && !is_admin()) {
+
         // 検索結果を投稿タイプに絞る
         $search .= " AND post_type = 'post' ";
+
         return $search;
     }
+
     return $search;
 }
 add_filter('posts_search', 'my_posts_search', 10, 2);
@@ -221,6 +209,14 @@ function my_searchform_shortcode($attrs, $content = '')
 }
 
 add_shortcode('search_form', 'my_searchform_shortcode');
+
+add_filter('upload_mimes', 'custom_upload_mimes');
+
+function custom_upload_mimes($existing_mimes = array())
+{
+    $existing_mimes['ico'] = 'images/ico';
+    return $existing_mimes;
+}
 /*
 // Breacrumb navXT のトップページの表記を書き換える
 add_filter('bcn_breadcrumb_title', 'nskw_bcn_breadcrumb_title_filter', 10, 2);

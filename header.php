@@ -29,31 +29,28 @@
         <div class="p-header">
             <div class="p-header__inner l-inner">
                 <h1 class="p-header__logo">
-                    <a href="<?php echo home_url('/'); ?>">
-                        <img src="<?php echo get_template_directory_uri(); ?>/images/common/logo.svg" alt="ロゴ" />
+                    <a href="<?php echo esc_url(home_url('/')); ?>">
+                        <img src="<?php echo esc_url(get_template_directory_uri() . '/images/common/logo.svg'); ?>" alt="ロゴ" />
                     </a>
                 </h1>
                 <nav class="p-header__globalNav">
                     <div class="p-globalNav">
                         <ul class="p-globalNav__menus">
                             <li class="p-globalNav__menu is-selected">
-                                <a href="<?php echo home_url('/'); ?>">
-                                    <img src="<?php echo get_template_directory_uri(); ?>/images/common/panda.svg"
-                                        alt="HOME" />
+                                <a href="<?php echo esc_url(home_url('/')); ?>">
+                                    <img src="<?php echo esc_url(get_template_directory_uri() . '/images/common/panda.svg'); ?>" alt="HOME" />
                                     <span>HOME</span>
                                 </a>
                             </li>
                             <li class="p-globalNav__menu">
                                 <a href="#">
-                                    <img src="<?php echo get_template_directory_uri(); ?>/images/common/map.svg"
-                                        alt="ご案内" />
+                                    <img src="<?php echo esc_url(get_template_directory_uri() . '/images/common/map.svg'); ?>" alt="ご案内" />
                                     <span>ご案内</span>
                                 </a>
                             </li>
                             <li class="p-globalNav__menu js-subMenu">
                                 <a href="#">
-                                    <img src="<?php echo get_template_directory_uri(); ?>/images/common/animal.svg"
-                                        alt="動物たち" />
+                                    <img src="<?php echo esc_url(get_template_directory_uri() . '/images/common/animal.svg'); ?>" alt="動物たち" />
                                     <span>動物たち</span>
                                 </a>
                                 <div class="p-globalNav__nav">
@@ -81,8 +78,7 @@
                             </li>
                             <li class="p-globalNav__menu">
                                 <a href="#">
-                                    <img src="<?php echo get_template_directory_uri(); ?>/images/common/star.svg"
-                                        alt="園について" />
+                                    <img src="<?php echo esc_url(get_template_directory_uri() . '/images/common/star.svg'); ?>" alt="園について" />
                                     <span>園について</span>
                                 </a>
                             </li>
@@ -111,22 +107,19 @@
                                 <ul class="p-drawer__menus">
                                     <li class="p-drawer__menu">
                                         <a href="#">
-                                            <img src="<?php echo get_template_directory_uri(); ?>/images/common/panda.svg"
-                                                alt="HOME" />
+                                            <img src="<?php echo esc_url(get_template_directory_uri() . '/images/common/panda.svg'); ?>" alt="HOME" />
                                             <span>HOME</span>
                                         </a>
                                     </li>
                                     <li class="p-drawer__menu">
                                         <a href="#">
-                                            <img src="<?php echo get_template_directory_uri(); ?>/images/common/map.svg"
-                                                alt="ご案内" />
+                                            <img src="<?php echo esc_url(get_template_directory_uri() . '/images/common/map.svg'); ?>" alt="ご案内" />
                                             <span>ご案内</span>
                                         </a>
                                     </li>
                                     <li class="p-drawer__menu js-drawer-subMenu is-open">
                                         <a href="">
-                                            <img src="<?php echo get_template_directory_uri(); ?>/images/common/animals.svg"
-                                                alt="動物たち" />
+                                            <img src="<?php echo esc_url(get_template_directory_uri() . '/images/common/animals.svg'); ?>" alt="動物たち" />
                                             <span>動物たち</span>
                                         </a>
                                         <ul class="p-drawer__subMenus">
@@ -152,8 +145,7 @@
                                     </li>
                                     <li class="p-drawer__menu">
                                         <a href="#">
-                                            <img src="<?php echo get_template_directory_uri(); ?>/images/common/star.svg"
-                                                alt="園について" />
+                                            <img src="<?php echo esc_url(get_template_directory_uri() . '/images/common/star.svg'); ?>" alt="園について" />
                                             <span>園について</span>
                                         </a>
                                     </li>

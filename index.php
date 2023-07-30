@@ -35,16 +35,13 @@
                             </div>
                             <div class="p-content__pickup">
                                 <figure class="p-content__star">
-                                    <img src="<?php echo get_template_directory_uri(); ?>/images/common/bigStar.svg"
-                                        alt="星のイラスト" />
+                                    <img src="<?php echo get_template_directory_uri(); ?>/images/common/bigStar.svg" alt="星のイラスト" />
                                 </figure>
                                 <div class="p-content__title">
-                                    <img src="<?php echo get_template_directory_uri(); ?>/images/common/pickup.svg"
-                                        alt="今日のピックアップ動物" />
+                                    <img src="<?php echo get_template_directory_uri(); ?>/images/common/pickup.svg" alt="今日のピックアップ動物" />
                                 </div>
                                 <figure class="p-content__img">
-                                    <img src="<?php echo get_template_directory_uri(); ?>/images/common/mv_02.png"
-                                        alt="今日のピックアップ動物の写真" />
+                                    <img src="<?php echo get_template_directory_uri(); ?>/images/common/mv_02.png" alt="今日のピックアップ動物の写真" />
                                 </figure>
                             </div>
                             <div class="p-content__sns">
@@ -52,20 +49,17 @@
                                 <ul class="p-content__sns-links">
                                     <li class="p-content__sns-link">
                                         <a href="#">
-                                            <img src="<?php echo get_template_directory_uri(); ?>/images/common/instagram.svg"
-                                                alt="instagram" />
+                                            <img src="<?php echo get_template_directory_uri(); ?>/images/common/instagram.svg" alt="instagram" />
                                         </a>
                                     </li>
                                     <li class="p-content__sns-link">
                                         <a href="#">
-                                            <img src="<?php echo get_template_directory_uri(); ?>/images/common/facebook.svg"
-                                                alt="facebook" />
+                                            <img src="<?php echo get_template_directory_uri(); ?>/images/common/facebook.svg" alt="facebook" />
                                         </a>
                                     </li>
                                     <li class="p-content__sns-link">
                                         <a href="#">
-                                            <img src="<?php echo get_template_directory_uri(); ?>/images/common/twitter.svg"
-                                                alt="twitter" />
+                                            <img src="<?php echo get_template_directory_uri(); ?>/images/common/twitter.svg" alt="twitter" />
                                         </a>
                                     </li>
                                 </ul>
@@ -73,24 +67,16 @@
                         </div>
                     </div>
                     <div class="p-mv__items js-mv-slider">
-                        <picture class="p-mv__item">
-                            <source srcset="<?php echo get_template_directory_uri(); ?>/images/top/mv_pc.png"
-                                media="(min-width:768px)" />
-                            <img src="<?php echo get_template_directory_uri(); ?>/images/top/mv.png"
-                                alt="Welcome to DEBEPAN" />
-                        </picture>
-                        <picture class="p-mv__item">
-                            <source srcset="<?php echo get_template_directory_uri(); ?>/images/top/mv_pc.png"
-                                media="(min-width:768px)" />
-                            <img src="<?php echo get_template_directory_uri(); ?>/images/top/mv.png"
-                                alt="Welcome to DEBEPAN" />
-                        </picture>
-                        <picture class="p-mv__item">
-                            <source srcset="<?php echo get_template_directory_uri(); ?>/images/top/mv_pc.png"
-                                media="(min-width:768px)" />
-                            <img src="<?php echo get_template_directory_uri(); ?>/images/top/mv.png"
-                                alt="Welcome to DEBEPAN" />
-                        </picture>
+                        <?php for ($i = 1; $i < 4; $i++) : ?>
+                            <?php $mainview = "mainview_{$i}"; ?>
+                            <?php $mainviewSP = "mainviewSP_{$i}"; ?>
+                            <?php if (get_field($mainview) != "" || get_field($mainviewSP) != "") : ?>
+                                <picture class="p-mv__item">
+                                    <source srcset="<?php the_field($mainview); ?>" media="(min-width:768px)" />
+                                    <img src="<?php the_field($mainviewSP); ?>" alt="Welcome to DEBEPAN" />
+                                </picture>
+                            <?php endif; ?>
+                        <?php endfor; ?>
                     </div>
                 </div>
             </div>
@@ -103,8 +89,7 @@
                     <div class="c-title">
                         <h2 class="c-title__ja">ご案内</h2>
                         <div class="c-title__img">
-                            <img src="<?php echo get_template_directory_uri(); ?>/images/common/title.svg"
-                                alt="足跡のイラスト" />
+                            <img src="<?php echo get_template_directory_uri(); ?>/images/common/title.svg" alt="足跡のイラスト" />
                         </div>
                         <p class="c-title__en">information</p>
                     </div>
@@ -147,39 +132,53 @@
             </div>
         </div>
     </section>
-    <section class="l-about">
-        <div class="p-about">
-            <div class="p-about__inner l-inner">
-                <div class="p-about__title">
-                    <div class="c-title">
-                        <h2 class="c-title__ja">園について</h2>
-                        <div class="c-title__img">
-                            <img src="<?php echo get_template_directory_uri(); ?>/images/common/title.svg"
-                                alt="足跡のイラスト" />
+    <?php
+    $about_id = 12; // aboutページのIDに置き換える
+    $about_data = get_post($about_id);
+    if ($about_data) : ?>
+        <?php
+        $words_limit = 85;
+        $title = $about_data->post_title;
+        $content = $about_data->post_content;
+        $thumbnail_id = get_post_thumbnail_id($about_id);
+        $thumbnail_url = get_the_post_thumbnail_url($about_id, 'full');
+        $first_content = wp_trim_words($content, $words_limit, '')
+        ?>
+        <section class="l-about">
+            <div class="p-about">
+                <div class="p-about__inner l-inner">
+                    <div class="p-about__title">
+                        <div class="c-title">
+                            <h2 class="c-title__ja"><?php echo $title ?></h2>
+                            <div class="c-title__img">
+                                <img src="<?php echo esc_url(get_template_directory_uri() . '/images/common/title.svg'); ?>" alt="足跡のイラスト" />
+                            </div>
+                            <p class="c-title__en">about debepan</p>
                         </div>
-                        <p class="c-title__en">about debepan</p>
+                    </div>
+                    <p class="p-about__text c-text">
+                        <?php echo $first_content ?>
+                    </p>
+                    <div class="p-about__btn">
+                        <a href="#" class="c-btn"> もっと見る </a>
+                    </div>
+                    <div class="p-about__map">
+                        <picture class="p-about__map-tag">
+                            <source srcset="<?php echo esc_url(get_template_directory_uri() . '/images/top/about_02_pc.png'); ?>" media="(min-width:768px)" />
+                            <img src="<?php echo esc_url(get_template_directory_uri() . '/images/top/about_02_sp.png'); ?>" alt="デベパンのアニマルマップ" />
+                        </picture>
+                        <figure class="p-about__map-img">
+                            <?php if ($thumbnail_id) : ?>
+                                <img src="<?php echo esc_url($thumbnail_url); ?>" alt="地図" />
+                            <?php else : ?>
+                                <img src="<?php echo esc_url(get_template_directory_uri() . '/images/noimg.png'); ?>" alt="no-image">
+                            <?php endif; ?>
+                        </figure>
                     </div>
                 </div>
-                <p class="p-about__text c-text">
-                    当園は、パンダをはじめとする様々な動物たちがのびのび生活している国内最大級の動物園です。 全100匹の動物たちが園内で皆様をお待ちしています。 ぜひ当園に登園して見て下さい。
-                </p>
-                <div class="p-about__btn">
-                    <a href="#" class="c-btn"> もっと見る </a>
-                </div>
-                <div class="p-about__map">
-                    <picture class="p-about__map-tag">
-                        <source srcset="<?php echo get_template_directory_uri(); ?>/images/top/about_02_pc.png"
-                            media="(min-width:768px)" />
-                        <img src="<?php echo get_template_directory_uri(); ?>/images/top/about_02_sp.png"
-                            alt="デベパンのアニマルマップ" />
-                    </picture>
-                    <figure class="p-about__map-img">
-                        <img src="<?php echo get_template_directory_uri(); ?>/images/top/about_01.jpg" alt="地図" />
-                    </figure>
-                </div>
             </div>
-        </div>
-    </section>
+        </section>
+    <?php endif; ?>
     <section class="l-animals">
         <div class="p-animals">
             <div class="p-animals__inner l-inner">
@@ -187,8 +186,7 @@
                     <div class="c-title">
                         <h2 class="c-title__ja">動物たち</h2>
                         <div class="c-title__img">
-                            <img src="<?php echo get_template_directory_uri(); ?>/images/common/title.svg"
-                                alt="足跡のイラスト" />
+                            <img src="<?php echo get_template_directory_uri(); ?>/images/common/title.svg" alt="足跡のイラスト" />
                         </div>
                         <p class="c-title__en">about animals</p>
                     </div>
@@ -198,8 +196,7 @@
                         <div class="p-animals__card">
                             <div class="p-animals__card--top">
                                 <figure class="p-animals__card-img">
-                                    <img src="<?php echo get_template_directory_uri(); ?>/images/top/top_panda.jpg"
-                                        alt="パンダ" />
+                                    <img src="<?php echo get_template_directory_uri(); ?>/images/top/top_panda.jpg" alt="パンダ" />
                                 </figure>
                                 <div class="p-animals__card--date c-tag c-tag--none">2022.06.10</div>
                             </div>
@@ -224,8 +221,7 @@
                             <div class="p-animals__card-btn">
                                 <a href="#" class="c-btn">
                                     もっと見る
-                                    <img src="<?php echo get_template_directory_uri(); ?>/images/common/news-arrow2.svg"
-                                        alt="" />
+                                    <img src="<?php echo get_template_directory_uri(); ?>/images/common/news-arrow2.svg" alt="" />
                                 </a>
                             </div>
                         </div>
@@ -235,8 +231,7 @@
                         <div class="p-animals__card">
                             <div class="p-animals__card--top">
                                 <figure class="p-animals__card-img">
-                                    <img src="<?php echo get_template_directory_uri(); ?>/images/top/top_lesserpansa.jpg"
-                                        alt="レッサーパンダ" />
+                                    <img src="<?php echo get_template_directory_uri(); ?>/images/top/top_lesserpansa.jpg" alt="レッサーパンダ" />
                                 </figure>
                                 <div class="p-animals__card--date c-tag c-tag--none">2022.06.10</div>
                             </div>
@@ -260,24 +255,20 @@
                             <div class="p-animals__card-btn">
                                 <a href="#" class="c-btn">
                                     もっと見る
-                                    <img src="<?php echo get_template_directory_uri(); ?>/images/common/news-arrow2.svg"
-                                        alt="" />
+                                    <img src="<?php echo get_template_directory_uri(); ?>/images/common/news-arrow2.svg" alt="" />
                                 </a>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="p-animals__tree01 u-desktop">
-                    <img src="<?php echo get_template_directory_uri(); ?>/images/top/animals_tree_01.png"
-                        alt="木のイラスト" />
+                    <img src="<?php echo get_template_directory_uri(); ?>/images/top/animals_tree_01.png" alt="木のイラスト" />
                 </div>
                 <div class="p-animals__tree02 u-desktop">
-                    <img src="<?php echo get_template_directory_uri(); ?>/images/top/animals_tree_02.png"
-                        alt="木のイラスト" />
+                    <img src="<?php echo get_template_directory_uri(); ?>/images/top/animals_tree_02.png" alt="木のイラスト" />
                 </div>
                 <div class="p-animals__tree03 u-desktop">
-                    <img src="<?php echo get_template_directory_uri(); ?>/images/top/animals_tree_03.png"
-                        alt="木のイラスト" />
+                    <img src="<?php echo get_template_directory_uri(); ?>/images/top/animals_tree_03.png" alt="木のイラスト" />
                 </div>
             </div>
         </div>
@@ -289,16 +280,14 @@
                     <div class="c-title">
                         <h2 class="c-title__ja">アクセス</h2>
                         <div class="c-title__img">
-                            <img src="<?php echo get_template_directory_uri(); ?>/images/common/title.svg"
-                                alt="足跡のイラスト" />
+                            <img src="<?php echo esc_url(get_template_directory_uri() . '/images/common/title.svg'); ?>" alt="足跡のイラスト" />
                         </div>
                         <p class="c-title__en c-title__en--white">access</p>
                     </div>
                 </div>
                 <picture class="p-access__map">
-                    <source srcset="<?php echo get_template_directory_uri(); ?>/images/top/access_01.jpg"
-                        media="(min-width:768px)" />
-                    <img src="<?php echo get_template_directory_uri(); ?>/images/top/access_01_sp.jpg" alt="地図" />
+                    <source srcset="<?php echo esc_url(get_template_directory_uri() . '/images/top/access_01.jpg'); ?>" media="(min-width:768px)" />
+                    <img src="<?php echo esc_url(get_template_directory_uri() . '/images/top/access_01_sp.jpg'); ?>" alt="地図" />
                 </picture>
                 <div class="p-access__box">
                     <div class="p-access__info">
@@ -317,22 +306,20 @@
                             <p class="p-access__unit-title"><span>●</span>アクセス</p>
                             <p class="p-access__unit-text c-text">お車でのご来園がおすすめです。</p>
                             <picture class="p-access__unit-img">
-                                <source srcset="<?php echo get_template_directory_uri(); ?>/images/top/access_pc.svg"
-                                    media="(min-width:768px)" />
-                                <img src="<?php echo get_template_directory_uri(); ?>/images/top/access_sp.png"
-                                    alt="所要時間" />
+                                <source srcset="<?php echo esc_url(get_template_directory_uri() . '/images/top/access_pc.svg'); ?>" media="(min-width:768px)" />
+                                <img src="<?php echo esc_url(get_template_directory_uri() . '/images/top/access_sp.png'); ?>" alt="所要時間" />
                             </picture>
                         </div>
                     </div>
                     <figure class="p-access__img">
-                        <img src="<?php echo get_template_directory_uri(); ?>/images/top/access_02.png" alt="来てね" />
+                        <img src="<?php echo esc_url(get_template_directory_uri() . '/images/top/access_02.png'); ?>" alt="来てね" />
                     </figure>
                 </div>
                 <div class="p-access__tree01 u-desktop">
-                    <img src="<?php echo get_template_directory_uri(); ?>/images/top/access_tree_01.png" alt="木のイラスト" />
+                    <img src="<?php echo esc_url(get_template_directory_uri() . '/images/top/access_tree_01.png'); ?>" alt="木のイラスト" />
                 </div>
                 <div class="p-access__tree02 u-desktop">
-                    <img src="<?php echo get_template_directory_uri(); ?>/images/top/access_tree_02.png" alt="木のイラスト" />
+                    <img src="<?php echo esc_url(get_template_directory_uri() . '/images/top/access_tree_02.png'); ?>" alt="木のイラスト" />
                 </div>
             </div>
         </div>

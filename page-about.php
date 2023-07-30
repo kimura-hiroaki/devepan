@@ -6,9 +6,9 @@
                 <div class="p-singleMv__items">
                     <div class="p-singleMv__item">
                         <?php if (has_post_thumbnail()) : ?>
-                        <?php the_post_thumbnail(); ?>
+                            <?php the_post_thumbnail(); ?>
                         <?php else : ?>
-                        <img src="<?php echo get_template_directory_uri(); ?>/images/noimg.png" alt="no-image">
+                            <img src="<?php echo esc_url(get_template_directory_uri() . '/images/noimg.png'); ?>" alt="no-image">
                         <?php endif; ?>
                     </div>
                 </div>
@@ -25,7 +25,7 @@
                             <span><?php the_modified_date('Y.m.d') ?>更新</span>
                         </div>
                         <h2 class="p-article__title"><?php the_title(); ?></h2>
-                        <?php echo the_content(); ?>
+                        <?php the_content(); ?>
                     </div>
                 </div>
             </div>
