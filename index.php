@@ -139,10 +139,9 @@
         <?php
         $words_limit = 85;
         $title = $about_data->post_title;
-        $content = $about_data->post_content;
         $thumbnail_id = get_post_thumbnail_id($about_id);
         $thumbnail_url = get_the_post_thumbnail_url($about_id, 'full');
-        $first_content = wp_trim_words($content, $words_limit, '')
+        $excerpt = get_the_excerpt($about_id);
         ?>
         <section class="l-about">
             <div class="p-about">
@@ -157,7 +156,7 @@
                         </div>
                     </div>
                     <p class="p-about__text c-text">
-                        <?php echo $first_content ?>
+                        <?php echo $excerpt ?>
                     </p>
                     <div class="p-about__btn">
                         <a href="#" class="c-btn"> もっと見る </a>
@@ -253,7 +252,7 @@
                                 子供たちはそのおかげでいたずらさんになっちゃいました。
                             </p>
                             <div class="p-animals__card-btn">
-                                <a href="#" class="c-btn">
+                                <a href="<?php echo esc_url(home_url('/about')); ?>" class="c-btn">
                                     もっと見る
                                     <img src="<?php echo get_template_directory_uri(); ?>/images/common/news-arrow2.svg" alt="" />
                                 </a>

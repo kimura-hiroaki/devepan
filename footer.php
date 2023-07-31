@@ -2,35 +2,31 @@
     <div class="p-footer">
         <div class="p-footer__inner l-inner">
             <div class="p-footer__img">
-                <img src="<?php echo esc_url(get_template_directory_uri() . '/images/common/logo.svg'); ?>" alt="ロゴ" />
+                <?php echo get_image_html('/images/common/logo.svg', 'ロゴ'); ?>
             </div>
             <nav class="p-footer__nav">
                 <ul class="p-footer__links">
                     <li class="p-footer__link">
-                        <a href="#">
-                            <img src="<?php echo esc_url(get_template_directory_uri() . '/images/common/panda.svg'); ?>"
-                                alt="HOME" />
+                        <a href="<?php echo esc_url(home_url('/')); ?>">
+                            <?php echo get_image_html('/images/common/panda.svg', 'HOME'); ?>
                             <span>HOME</span>
                         </a>
                     </li>
                     <li class="p-footer__link">
-                        <a href="#">
-                            <img src="<?php echo esc_url(get_template_directory_uri() . '/images/common/map.svg'); ?>"
-                                alt="ご案内" />
+                        <a href="<?php echo esc_url(home_url('/info')); ?>">
+                            <?php echo get_image_html('/images/common/map.svg', 'ご案内'); ?>
                             <span>ご案内</span>
                         </a>
                     </li>
                     <li class="p-footer__link">
-                        <a href="#">
-                            <img src="<?php echo esc_url(get_template_directory_uri() . '/images/common/animal.svg'); ?>"
-                                alt="動物たち" />
+                        <a href="<?php echo esc_url(home_url('/animals')); ?>">
+                            <?php echo get_image_html('/images/common/animal.svg', '動物たち'); ?>
                             <span>動物たち</span>
                         </a>
                     </li>
                     <li class="p-footer__link">
-                        <a href="#">
-                            <img src="<?php echo esc_url(get_template_directory_uri() . '/images/common/star.svg'); ?>"
-                                alt="園について" />
+                        <a href="<?php echo esc_url(home_url('/about')); ?>">
+                            <?php echo get_image_html('/images/common/star.svg', '園について'); ?>
                             <span>園について</span>
                         </a>
                     </li>
