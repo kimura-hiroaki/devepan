@@ -2318,6 +2318,10 @@ main {
 	text-align: center;
 }
 
+.p-search__form-row input[type=radio]:checked+span {
+	background-color: #F8DC27;
+}
+
 .p-singleMv {
 	background-color: #C9DDAC;
 	padding-top: 43px;
