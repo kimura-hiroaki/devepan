@@ -2037,12 +2037,35 @@ main {
 	padding: 0 1.25rem;
 }
 
+.p-nav ul li .prev,
+.p-nav ul li .next {
+	width: 160px;
+	width: 10rem;
+	background-color: transparent;
+}
+
+.p-nav ul li img {
+	height: 25px;
+	height: 1.5625rem;
+	width: 25px;
+	width: 1.5625rem;
+}
+
+.p-nav ul li .prev span,
+.p-nav ul li .next span {
+	width: 133px;
+	width: 8.3125rem;
+	background-color: transparent;
+}
+
 .p-nav__arrow {
 	max-width: 133px;
 	max-width: 8.3125rem;
 	width: 100%;
 }
 
+.prev,
+.next,
 .p-nav__arrow a {
 	-webkit-box-align: center;
 	-ms-flex-align: center;
@@ -2140,9 +2163,9 @@ main {
 	justify-content: center;
 	border-radius: 50%;
 	height: 50px;
-	/* height: 3.125rem; */
+	height: 3.125rem;
 	width: 50px;
-	/* width: 3.125rem; */
+	width: 3.125rem;
 	background-color: #fff;
 }
 
@@ -3152,20 +3175,6 @@ main {
 
 	.p-nav__btn {
 		max-width: 16.25rem;
-	}
-
-	.p-nav {
-		height: 50px;
-	}
-
-	.p-nav nav {
-		width: 300px;
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		-webkit-transform: translate(-50%, -50%);
-		transform: translate(-50%, -50%);
-		z-index: 2;
 	}
 
 	.p-nav__arrows {

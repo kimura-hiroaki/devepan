@@ -62,6 +62,45 @@ function change_posts_per_page($query)
 }
 add_action('pre_get_posts', 'change_posts_per_page');
 
+/*
+// サブループ用のページネーション
+function subroopPagination($end_size = 2, $mid_size = 1, $prev_next = true)
+{
+    global $sub_roop_query;
+    $max_page = $sub_roop_query->max_num_pages; //最大ページ
+    $current = $sub_roop_query->query['paged']; //現在のページ
+    $page_format = paginate_links(
+        array(
+            'total' => $max_page,
+            'type'  => 'array',
+            'prev_text' => '前へ',
+            'next_text' => '次へ',
+            'end_size' => $end_size, //初期値:2両端のﾍﾟｰｼﾞﾘﾝｸの数
+            'mid_size' => $mid_size, //初期値:1両端ページリンクを表示数
+            'prev_next' => $prev_next, //初期値:true [前へ][次へ]のリンクを含むか
+        )
+    );
+    $code = '';
+    if (is_array($page_format)) {
+        $paged = get_query_var('paged') == 0 ? 1 : get_query_var('paged');
+        $code .= '<div class="navigation post-navigation">';
+        $code .= '<ul class="nav-links">';
+        if (!is_paged()) {
+            $code .= '<span class="page-numbers"></span>';
+        }
+        foreach ($page_format as $page) {
+            $code .= $page;
+        }
+        if ($current == $max_page) {
+            $code .= '<span class="page-numbers"></span>';
+        }
+        $code .= '</ul>';
+        $code .= '</div>';
+    }
+    wp_reset_query();
+    return $code;
+}
+*/
 
 /*
 // 抜粋末尾の文字列を[…]から変更する

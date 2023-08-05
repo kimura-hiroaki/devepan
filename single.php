@@ -36,7 +36,7 @@
                         <div class="p-nav__btn">
                             <a href="#" class="c-btn">一覧をみる</a>
                         </div>
-                        <?php get_template_part("template-parts/pagination-nextprev"); ?>
+                        <?php get_template_part("template-parts/pagination-single"); ?>
                     </div>
                 </div>
             </div>

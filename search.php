@@ -127,11 +127,11 @@
                     } else {
                         $taxquery_category[] = '';
                     }
-
+                    $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
                     $search_args = array(
                         'post_type' => 'animals',
                         'posts_per_page' => 6,
-                        'paged' => get_query_var('paged'),
+                        'paged' => $paged,
                         's' => $search_word,
                         'tax_query' => array(
                             'relation' => 'AND',
@@ -139,7 +139,6 @@
                             $taxquery_category
                         )
                     );
-
                     $query = new WP_Query($search_args);
                     ?>
                     <?php if ($query->have_posts()) : ?>
@@ -174,7 +173,6 @@
                                 </a>
                             </div>
                         <?php endwhile; ?>
-                        <?php wp_reset_postdata(); ?>
                     <?php else : ?>
                         <div>
                             <p>該当する内容がありません。</p>
@@ -182,24 +180,9 @@
                     <?php endif; ?>
                 </div>
                 <div class="p-cards__nav">
-                    <div class="p-nav">
-                        <?php
-                        $big = 9999999999;
-                        $arg = array(
-                            'base' => str_replace($big, '%#%', esc_url(get_pagenum_link($big))),
-                            'format' => '?page=%#%',
-                            'current' => max(1, get_query_var('paged')),
-                            'total'   => $query->max_num_pages,
-                            'type'    => 'list',
-                            'mid_size' => 0,
-                            'prev_next' => false,
-                        );
-                        echo $query->max_num_pages;
-                        the_posts_pagination($arg);
-                        ?>
-                        <?php get_template_part("template-parts/pagination-nextprev"); ?>
-                    </div>
+                    <?php get_template_part("template-parts/pagination"); ?>
                 </div>
+                <?php wp_reset_postdata(); ?>
             </div>
         </div>
     </div>

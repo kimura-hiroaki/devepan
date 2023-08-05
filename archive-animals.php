@@ -50,7 +50,7 @@
                                 $args = array(
                                     'post_type' => 'animals',
                                     'posts_per_page' => 6,
-                                    // 'paged' => get_query_var('paged')
+                                    'paged' => get_query_var('paged')
                                 );
                                 $query = new WP_Query($args);
                                 ?>
@@ -135,7 +135,6 @@
                                 </a>
                             </div>
                         <?php endwhile; ?>
-                        <?php wp_reset_postdata(); ?>
                     <?php endif; ?>
                 </div>
                 <div class="p-cards__nav">
@@ -156,6 +155,7 @@
                         <?php get_template_part("template-parts/pagination-nextprev"); ?>
                     </div>
                 </div>
+                <?php wp_reset_postdata(); ?>
             </div>
         </div>
     </div>

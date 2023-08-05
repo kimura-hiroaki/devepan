@@ -71,10 +71,6 @@
                                     </div>
                                 <?php endwhile; ?>
                             </div>
-                            <?php
-                            // サブループのループをリセット
-                            wp_reset_postdata();
-                            ?>
                         <?php endif; ?>
                     </div>
                 </div>
@@ -83,9 +79,10 @@
                         <div class="p-nav__btn">
                             <a href="#" class="c-btn">一覧をみる</a>
                         </div>
-                        <?php get_template_part("template-parts/pagination-nextprev"); ?>
+                        <?php get_template_part("template-parts/pagination-single"); ?>
                     </div>
                 </div>
+                <?php wp_reset_postdata(); ?>
             </div>
         </div>
     </div>

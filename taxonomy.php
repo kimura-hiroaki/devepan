@@ -49,13 +49,13 @@
                                 </div>
                             </div>
                             <div class="p-mv__slider js-mv-slider">
-                                <?php
-                                $args = array(
-                                    'post_type' => 'animals',
-                                    'posts_per_page' => 6,
-                                );
-                                $query = new WP_Query($args);
-                                ?>
+                                <!-- <?php
+                                        $args = array(
+                                            'post_type' => 'animals',
+                                            'posts_per_page' => 6,
+                                        );
+                                        $query = new WP_Query($args);
+                                        ?> -->
                                 <?php if ($query->have_posts()) : ?>
                                     <?php while ($query->have_posts()) : ?>
                                         <?php $query->the_post(); ?>
@@ -103,13 +103,14 @@
             <div class="p-cards__inner l-inner">
                 <div class="p-cards__wrap">
                     <?php
+                    $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
                     $args = array(
                         'post_type' => 'animals',
                         'taxonomy' => $page_object->taxonomy,
                         'term' => $page_object->slug,
                         'field' => 'slug',
                         'posts_per_page' => 6,
-                        'paged' => get_query_var('paged')
+                        'paged' => $paged
                     );
                     $query = new WP_Query($args);
                     ?>
