@@ -46,9 +46,17 @@
                                 </div>
                             </div>
                             <div class="p-mv__slider js-mv-slider">
-                                <?php if (have_posts()) : ?>
-                                    <?php while (have_posts()) : ?>
-                                        <?php the_post(); ?>
+                                <?php
+                                $args = array(
+                                    'post_type' => 'animals',
+                                    'posts_per_page' => 6,
+                                    // 'paged' => get_query_var('paged')
+                                );
+                                $query = new WP_Query($args);
+                                ?>
+                                <?php if ($query->have_posts()) : ?>
+                                    <?php while ($query->have_posts()) : ?>
+                                        <?php $query->the_post(); ?>
                                         <div class="p-mv__slider-item">
                                             <?php
                                             if (has_post_thumbnail()) {
@@ -59,17 +67,27 @@
                                             ?>
                                         </div>
                                     <?php endwhile; ?>
+                                    <?php wp_reset_postdata(); ?>
                                 <?php endif; ?>
                             </div>
                         </div>
                         <div class="p-mv__box p-mv__box--small">
                             <div class="p-mv__box-head c-bigText">動物たちの日常</div>
                             <div class="p-mv__box-tags">
-                                <div class="p-mv__box-tag c-tag">ゴリラ</div>
-                                <div class="p-mv__box-tag c-tag">パンダ</div>
-                                <div class="p-mv__box-tag c-tag">キリン</div>
-                                <div class="p-mv__box-tag c-tag">カピバラ</div>
-                                <div class="p-mv__box-tag c-tag">ハシビロコウ</div>
+                                <?php
+                                $arg = array(
+                                    'taxonomy' => 'genre',
+                                    'orderby' => 'ID',
+                                    'order' => 'DESC',
+                                );
+                                $terms = get_terms($arg);
+                                ?>
+                                <?php if (!is_wp_error($terms)) : ?>
+                                    <?php foreach ($terms as $term) : ?>
+                                        <?php $term_link = get_term_link($term); ?>
+                                        <div class="p-mv__box-tag c-tag"><a href="<?php echo esc_url($term_link); ?>"><?php echo $term->name; ?></a></div>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
                             </div>
                         </div>
                     </div>
@@ -82,130 +100,60 @@
         <div class="p-cards">
             <div class="p-cards__inner l-inner">
                 <div class="p-cards__wrap">
-                    <div class="p-cards__card">
-                        <div class="p-card">
-                            <figure class="p-card__img">
-                                <img src="./images/animals/rinrin.jpg" alt="リンリン" />
-                            </figure>
-                            <div class="p-card__date">
-                                <p class="p-card__date-post">投稿日：2022.06.10</p>
-                                <p class="p-card__date-update">更新日：2022.06.10</p>
+                    <?php
+                    $query = new WP_Query($args);
+                    ?>
+                    <?php if ($query->have_posts()) : ?>
+                        <?php while ($query->have_posts()) : ?>
+                            <?php $query->the_post(); ?>
+                            <?php
+                            $terms = get_the_terms(get_the_ID(), 'condition');
+                            $term_link = get_term_link($terms[0]);
+                            ?>
+                            <div class="p-cards__card">
+                                <a href="<?php the_permalink(); ?>">
+                                    <div class="p-card">
+                                        <figure class="p-card__img">
+                                            <?php
+                                            if (has_post_thumbnail()) {
+                                                the_post_thumbnail();
+                                            } else {
+                                                echo get_image_html('/images/noimg.png', 'no-image');
+                                            }
+                                            ?>
+                                        </figure>
+                                        <div class="p-card__date">
+                                            <p class="p-card__date-post">投稿日：<?php the_time('Y.m.d'); ?></p>
+                                            <p class="p-card__date-update">更新日：<?php the_modified_date('Y.m.d') ?></p>
+                                        </div>
+                                        <div class="p-card__tag c-tag">
+                                            <a href="<?php echo esc_url($term_link); ?>"><?php echo $terms[0]->name; ?>
+                                        </div>
+                                        <h3 class="p-card__title"><?php the_title(); ?></h3>
+                                        <p class="p-card__text c-text"><?php the_excerpt(); ?>
+                                    </div>
+                                </a>
                             </div>
-                            <div class="p-card__tag c-tag">動物と遊ぶ</div>
-                            <h3 class="p-card__title">リンリン</h3>
-                            <p class="p-card__text c-text">
-                                リンリンは園に来た時からおてんば娘。<br />
-                                木登りが大好きですが、木から降りれなくて飼育員に助けられることもしばしば。
-                            </p>
-                        </div>
-                    </div>
-                    <div class="p-cards__card">
-                        <div class="p-card">
-                            <figure class="p-card__img">
-                                <img src="./images/animals/enegori.jpg" alt="エネゴリ" />
-                            </figure>
-                            <div class="p-card__date">
-                                <p class="p-card__date-post">投稿日：2022.06.10</p>
-                                <p class="p-card__date-update">更新日：2022.06.10</p>
-                            </div>
-                            <div class="p-card__tag c-tag">餌やり</div>
-                            <h3 class="p-card__title">エネゴリ</h3>
-                            <p class="p-card__text c-text">
-                                園内一マッチョなごりらのエネゴリさん<br />
-                                体に見合わず性格は温厚。とてもやさしいゴリラさんです。<br />
-                                リンゴが大好きです。
-                            </p>
-                        </div>
-                    </div>
-                    <div class="p-cards__card">
-                        <div class="p-card">
-                            <figure class="p-card__img">
-                                <img src="./images/animals/pentagon.jpg" alt="ペンタゴン" />
-                            </figure>
-                            <div class="p-card__date">
-                                <p class="p-card__date-post">投稿日：2022.06.10</p>
-                                <p class="p-card__date-update">更新日：2022.06.10</p>
-                            </div>
-                            <div class="p-card__tag c-tag">お散歩</div>
-                            <h3 class="p-card__title">ペンタゴン</h3>
-                            <p class="p-card__text c-text">お散歩大好きペンタゴン。<br>
-                                生まれたててよちよち歩きですが、園のいろいろなところにお散歩に行きます。<br>
-                                いっしょにお散歩してくださいね！</p>
-                        </div>
-                    </div>
-                    <div class="p-cards__card">
-                        <div class="p-card">
-                            <figure class="p-card__img">
-                                <img src="./images/animals/king.jpg" alt="キング" />
-                            </figure>
-                            <div class="p-card__date">
-                                <p class="p-card__date-post">投稿日：2022.06.10</p>
-                                <p class="p-card__date-update">更新日：2022.06.10</p>
-                            </div>
-                            <div class="p-card__tag c-tag">お休み中</div>
-                            <h3 class="p-card__title">キング</h3>
-                            <p class="p-card__text c-text">百獣の王ライオンのキング君。キングの名とは裏腹に、いつもおねむです。<br>
-                                起きているところに会えると幸運かも！食事よりも睡眠が好き。</p>
-                        </div>
-                    </div>
-                    <div class="p-cards__card">
-                        <div class="p-card">
-                            <figure class="p-card__img">
-                                <img src="./images/animals/hassi.jpg" alt="はっしー" />
-                            </figure>
-                            <div class="p-card__date">
-                                <p class="p-card__date-post">投稿日：2022.06.10</p>
-                                <p class="p-card__date-update">更新日：2022.06.10</p>
-                            </div>
-                            <div class="p-card__tag c-tag">お休み中</div>
-                            <h3 class="p-card__title">はっしー</h3>
-                            <p class="p-card__text c-text">動かない鳥として有名なハシビロコウのはっしー。こちらを見ていることも多いですが、本当に動かないです。<br>
-                                動くときはご飯の時だけです。</p>
-                        </div>
-                    </div>
-                    <div class="p-cards__card">
-                        <div class="p-card">
-                            <figure class="p-card__img">
-                                <img src="./images/animals/kazama.jpg" alt="風間" />
-                            </figure>
-                            <div class="p-card__date">
-                                <p class="p-card__date-post">投稿日：2022.06.10</p>
-                                <p class="p-card__date-update">更新日：2022.06.10</p>
-                            </div>
-                            <div class="p-card__tag c-tag">動物と遊ぶ</div>
-                            <h3 class="p-card__title">風間</h3>
-                            <p class="p-card__text c-text">風間くんはレッサーの森のお父さん。
-                                一番威厳のあるはずなのによく眠っていて、子供たちのおもちゃにされてしまいます。</p>
-                        </div>
-                    </div>
+                        <?php endwhile; ?>
+                        <?php wp_reset_postdata(); ?>
+                    <?php endif; ?>
                 </div>
                 <div class="p-cards__nav">
                     <div class="p-nav">
-                        <ul class="p-nav__pager">
-                            <li class="p-nav__page is-active">
-                                <a href="#">1</a>
-                            </li>
-                            <li class="p-nav__page dots"></li>
-                            <li class="p-nav__page dots"></li>
-                            <li class="p-nav__page dots"></li>
-                            <li class="p-nav__page">
-                                <a href="#">10</a>
-                            </li>
-                        </ul>
-                        <div class="p-nav__arrows">
-                            <div class="p-nav__arrow">
-                                <a href="#">
-                                    <img src="./images/common/prev-arrow2.svg" alt="前のページへ" />
-                                    <span>前のページへ</span>
-                                </a>
-                            </div>
-                            <div class="p-nav__arrow">
-                                <a href="#">
-                                    <span>次のページへ</span>
-                                    <img src="./images/common/next-arrow2.svg" alt="次のページへ" />
-                                </a>
-                            </div>
-                        </div>
+                        <?php
+                        $big = 9999999999;
+                        $arg = array(
+                            'base' => str_replace($big, '%#%', esc_url(get_pagenum_link($big))),
+                            'format' => '?page=%#%',
+                            'current' => max(1, get_query_var('paged')),
+                            'total'   => $query->max_num_pages,
+                            'type'    => 'list',
+                            'mid_size' => 0,
+                            'prev_next' => false,
+                        );
+                        the_posts_pagination($arg);
+                        ?>
+                        <?php get_template_part("template-parts/pagination-nextprev"); ?>
                     </div>
                 </div>
             </div>

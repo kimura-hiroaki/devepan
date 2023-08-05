@@ -137,7 +137,6 @@
     $about_data = get_post($about_id);
     if ($about_data) : ?>
         <?php
-        $words_limit = 85;
         $title = $about_data->post_title;
         $thumbnail_id = get_post_thumbnail_id($about_id);
         $thumbnail_url = get_the_post_thumbnail_url($about_id, 'full');

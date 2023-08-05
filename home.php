@@ -107,13 +107,14 @@
                         $big = 9999999999;
                         $arg = array(
                             'base' => str_replace($big, '%#%', esc_url(get_pagenum_link($big))),
+                            'format' => '?page=%#%',
                             'current' => max(1, get_query_var('paged')),
                             'total'   => $wp_query->max_num_pages,
                             'type'    => 'list',
                             'mid_size' => 0,
                             'prev_next' => false,
                         );
-                        echo paginate_links($arg);
+                        the_posts_pagination($arg);
                         ?>
                         <?php get_template_part("template-parts/pagination-nextprev"); ?>
                     </div>

@@ -51,6 +51,18 @@ function add_defer($tag, $handle)
 }
 add_filter('script_loader_tag', 'add_defer', 10, 2);
 
+// 1ページに表示する最大投稿数（初期の投稿以外（カスタム投稿など））
+function change_posts_per_page($query)
+{
+    if (is_admin() || !$query->is_main_query()) {
+        return;
+    } else { //上記以外
+        $query->set('posts_per_page', '6'); //表示件数を指定
+    }
+}
+add_action('pre_get_posts', 'change_posts_per_page');
+
+
 /*
 // 抜粋末尾の文字列を[…]から変更する
 function my_excerpt_more($more)
