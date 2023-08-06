@@ -63,46 +63,6 @@ function change_posts_per_page($query)
 add_action('pre_get_posts', 'change_posts_per_page');
 
 /*
-// サブループ用のページネーション
-function subroopPagination($end_size = 2, $mid_size = 1, $prev_next = true)
-{
-    global $sub_roop_query;
-    $max_page = $sub_roop_query->max_num_pages; //最大ページ
-    $current = $sub_roop_query->query['paged']; //現在のページ
-    $page_format = paginate_links(
-        array(
-            'total' => $max_page,
-            'type'  => 'array',
-            'prev_text' => '前へ',
-            'next_text' => '次へ',
-            'end_size' => $end_size, //初期値:2両端のﾍﾟｰｼﾞﾘﾝｸの数
-            'mid_size' => $mid_size, //初期値:1両端ページリンクを表示数
-            'prev_next' => $prev_next, //初期値:true [前へ][次へ]のリンクを含むか
-        )
-    );
-    $code = '';
-    if (is_array($page_format)) {
-        $paged = get_query_var('paged') == 0 ? 1 : get_query_var('paged');
-        $code .= '<div class="navigation post-navigation">';
-        $code .= '<ul class="nav-links">';
-        if (!is_paged()) {
-            $code .= '<span class="page-numbers"></span>';
-        }
-        foreach ($page_format as $page) {
-            $code .= $page;
-        }
-        if ($current == $max_page) {
-            $code .= '<span class="page-numbers"></span>';
-        }
-        $code .= '</ul>';
-        $code .= '</div>';
-    }
-    wp_reset_query();
-    return $code;
-}
-*/
-
-/*
 // 抜粋末尾の文字列を[…]から変更する
 function my_excerpt_more($more)
 {
@@ -110,6 +70,61 @@ function my_excerpt_more($more)
 }
 add_filter('excerpt_more', 'my_excerpt_more');
 */
+/********************
+ *テーマカスタマイザー
+ ***********************/
+function theme_customizer_extension($wp_customize)
+{
+    //セクション
+    $wp_customize->add_section('sns', array(
+        'title' => 'SNS情報',
+        'priority' => 100,
+    ));
+
+    //テーマ設定
+    $wp_customize->add_setting('instagram', array(
+        'default' => null,
+    ));
+    $wp_customize->add_setting('facebook', array(
+        'default' => null,
+    ));
+    $wp_customize->add_setting('twitter', array(
+        'default' => null,
+    ));
+    //コントロールの追加
+    $wp_customize->add_control('instagram', array(
+        'section' => 'sns',
+        'settings' => 'instagram',
+        'label' => 'InstagramページURL',
+        'type' => 'text',
+        'priority' => 10,
+    ));
+    $wp_customize->add_control('facebook', array(
+        'section' => 'sns',
+        'settings' => 'facebook',
+        'label' => 'FacebookページURL',
+        'type' => 'text',
+        'priority' => 20,
+    ));
+    $wp_customize->add_control('twitter', array(
+        'section' => 'sns',
+        'settings' => 'twitter',
+        'label' => 'TwitterページURL',
+        'type' => 'text',
+        'priority' => 30,
+    ));
+}
+add_action('customize_register', 'theme_customizer_extension');
+
+//登録の確認
+function is_setSNS($sns_name)
+{
+    $bool = false;
+    if (get_theme_mod($sns_name, null) !== null) {
+        $bool = true;
+    }
+    return $bool;
+}
 
 /********************
  *Breacrumb navXT関連
@@ -211,12 +226,12 @@ function get_japan_dayofweek()
 // 開園日かどうか
 function is_openGarden()
 {
-    $is_open = false;
+    $bool = false;
     $day = wp_date('N', null, new DateTimeZone('Asia/Tokyo'));
     if ($day < 6) {
-        $is_open = true;
+        $bool = true;
     }
-    return $is_open;
+    return $bool;
 }
 
 //画像の挿入
@@ -233,10 +248,49 @@ function get_image_html($image_url, $alt_text)
     return $image_html;
 }
 
+/*
+// サブループ用のページネーション
+function subroopPagination($end_size = 2, $mid_size = 1, $prev_next = true)
+{
+    global $sub_roop_query;
+    $max_page = $sub_roop_query->max_num_pages; //最大ページ
+    $current = $sub_roop_query->query['paged']; //現在のページ
+    $page_format = paginate_links(
+        array(
+            'total' => $max_page,
+            'type'  => 'array',
+            'prev_text' => '前へ',
+            'next_text' => '次へ',
+            'end_size' => $end_size, //初期値:2両端のﾍﾟｰｼﾞﾘﾝｸの数
+            'mid_size' => $mid_size, //初期値:1両端ページリンクを表示数
+            'prev_next' => $prev_next, //初期値:true [前へ][次へ]のリンクを含むか
+        )
+    );
+    $code = '';
+    if (is_array($page_format)) {
+        $paged = get_query_var('paged') == 0 ? 1 : get_query_var('paged');
+        $code .= '<div class="navigation post-navigation">';
+        $code .= '<ul class="nav-links">';
+        if (!is_paged()) {
+            $code .= '<span class="page-numbers"></span>';
+        }
+        foreach ($page_format as $page) {
+            $code .= $page;
+        }
+        if ($current == $max_page) {
+            $code .= '<span class="page-numbers"></span>';
+        }
+        $code .= '</ul>';
+        $code .= '</div>';
+    }
+    wp_reset_query();
+    return $code;
+}
+*/
+
 // アーカイブタイトル書き換え
 function my_archive_title($title)
 {
-
     if (is_category()) { // カテゴリーアーカイブの場合
         $title = single_cat_title('', false);
     } elseif (is_tag()) { // タグアーカイブの場合
@@ -320,3 +374,30 @@ function my_searchform_shortcode($attrs, $content = '')
 }
 
 add_shortcode('search_form', 'my_searchform_shortcode');
+
+// 日毎にランダムに投稿IDを取得
+function get_posts_daily_random()
+{
+    $transient = 'my_daily_random_posts';
+    $ids = get_transient($transient);
+    if ($ids === false) {
+        $seed = random_int(PHP_INT_MIN, PHP_INT_MAX);
+        $arg = array(
+            'fields' => 'ids',
+            'post_type' => 'animals',
+            'posts_per_page' => 1,
+            'orderby' => 'RAND(' . $seed . ')',
+        );
+        $ids = get_posts($arg);
+        if ($ids) {
+            $limit_time = strtotime(wp_date('Y-m-d 24:00:00', null, new DateTimeZone('Asia/Tokyo')));
+            $now_time = strtotime(wp_date('Y-m-d H:i:s', null, new DateTimeZone('Asia/Tokyo')));
+            $sec = $limit_time - $now_time;
+            set_transient($transient, $ids, $sec);
+        }
+    }
+    if ($ids !== false) {
+        return $ids;
+    }
+    return array();
+}

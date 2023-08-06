@@ -1165,6 +1165,13 @@ main {
 	z-index: -2;
 }
 
+.p-content__img img {
+	width: 12.6875rem;
+	height: 12.6875rem;
+	object-fit: cover;
+	border-radius: 50%;
+}
+
 .p-content__sns {
 	background-color: #fff;
 	border: 2px solid #171717;

@@ -28,40 +28,80 @@
                             <div class="p-content__box">
                                 <div class="p-content__box-head">週刊旬予報</div>
                                 <div class="p-content__box-main">
-                                    <p class="p-content__box-text">パンダと触れ合う</p>
-                                    <p class="p-content__box-text">キリンにご飯あげよう</p>
-                                    <p class="p-content__box-text">カピバラと歩こう</p>
+                                    <?php
+                                    $args = array(
+                                        'post_type' => array('post', 'animals'),
+                                        'posts_per_page' => 3,
+                                        'date_query' => array(
+                                            array(
+                                                'before' => 'now',
+                                                'after' => '1 week ago',
+                                                'inclusive' => true, // その日を含めるかどうか
+                                            )
+                                        )
+                                    );
+                                    $query = new WP_Query($args);
+                                    ?>
+                                    <?php if ($query->have_posts()) : ?>
+                                        <?php while ($query->have_posts()) : ?>
+                                            <?php $query->the_post(); ?>
+                                            <p class="p-content__box-text"><?php the_title(); ?></p>
+                                        <?php endwhile; ?>
+                                        <?php wp_reset_postdata(); ?>
+                                    <?php endif; ?>
                                 </div>
                             </div>
+                            <?php
+                            $daily_post_ids = get_posts_daily_random();
+                            $daily_post_id = $daily_post_ids[0]; //今回は1投稿だが念のため
+                            var_dump($daily_post_id);
+                            $daily_post_date = get_post($daily_post_id);
+                            echo $daily_post_date->post_title;
+                            $daily_post_thumbnail_id = get_post_thumbnail_id($daily_post_id);
+                            $daily_post_thumbnail_url = get_the_post_thumbnail_url($daily_post_id, 'medium');
+                            ?>
                             <div class="p-content__pickup">
                                 <figure class="p-content__star">
-                                    <img src="<?php echo get_template_directory_uri(); ?>/images/common/bigStar.svg" alt="星のイラスト" />
+                                    <?php echo get_image_html('/images/common/bigStar.svg', '星のイラスト') ?>
                                 </figure>
                                 <div class="p-content__title">
-                                    <img src="<?php echo get_template_directory_uri(); ?>/images/common/pickup.svg" alt="今日のピックアップ動物" />
+                                    <?php echo get_image_html('/images/common/pickup.svg', '今日のピックアップ動物') ?>
                                 </div>
                                 <figure class="p-content__img">
-                                    <img src="<?php echo get_template_directory_uri(); ?>/images/common/mv_02.png" alt="今日のピックアップ動物の写真" />
+                                    <?php if ($daily_post_thumbnail_id) : ?>
+                                        <img src="<?php echo esc_url($daily_post_thumbnail_url); ?>" alt="今日のピックアップ動物の写真" />
+                                    <?php else : ?>
+                                        <img src="<?php echo esc_url(get_template_directory_uri() . '/images/noimg.png'); ?>" alt="no-image">
+                                    <?php endif; ?>
                                 </figure>
                             </div>
                             <div class="p-content__sns">
                                 <div class="p-content__sns-title">SNS</div>
                                 <ul class="p-content__sns-links">
-                                    <li class="p-content__sns-link">
-                                        <a href="#">
-                                            <img src="<?php echo get_template_directory_uri(); ?>/images/common/instagram.svg" alt="instagram" />
-                                        </a>
-                                    </li>
-                                    <li class="p-content__sns-link">
-                                        <a href="#">
-                                            <img src="<?php echo get_template_directory_uri(); ?>/images/common/facebook.svg" alt="facebook" />
-                                        </a>
-                                    </li>
-                                    <li class="p-content__sns-link">
-                                        <a href="#">
-                                            <img src="<?php echo get_template_directory_uri(); ?>/images/common/twitter.svg" alt="twitter" />
-                                        </a>
-                                    </li>
+                                    <?php if (is_setSNS('instagram')) : ?>
+                                        <?php $instagram_url = get_theme_mod('instagram', null); ?>
+                                        <li class="p-content__sns-link">
+                                            <a href="<?php echo esc_url($instagram_url); ?>" target="_blank">
+                                                <?php echo get_image_html('/images/common/instagram.svg', 'instagram') ?>
+                                            </a>
+                                        </li>
+                                    <?php endif; ?>
+                                    <?php if (is_setSNS('facebook')) : ?>
+                                        <?php $facebook_url = get_theme_mod('facebook', null); ?>
+                                        <li class="p-content__sns-link">
+                                            <a href="<?php echo esc_url($facebook_url); ?>" target="_blank">
+                                                <?php echo get_image_html('/images/common/facebook.svg', 'facebook') ?>
+                                            </a>
+                                        </li>
+                                    <?php endif; ?>
+                                    <?php if (is_setSNS('twitter')) : ?>
+                                        <?php $twitter_url = get_theme_mod('twitter', null); ?>
+                                        <li class="p-content__sns-link">
+                                            <a href="<?php echo esc_url($twitter_url); ?>" target="_blank">
+                                                <?php echo get_image_html('/images/common/twitter.svg', 'twitter') ?>
+                                            </a>
+                                        </li>
+                                    <?php endif; ?>
                                 </ul>
                             </div>
                         </div>
