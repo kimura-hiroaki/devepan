@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
     <meta name="format-detection" content="telephone=no" />
     <!-- meta情報 -->
-    <title>デベパン</title>
+    <title>デベパン動物園</title>
     <meta name="description" content="" />
     <meta name="keywords" content="" />
     <!-- ogp -->
@@ -36,47 +36,73 @@
                 <nav class="p-header__globalNav">
                     <div class="p-globalNav">
                         <ul class="p-globalNav__menus">
-                            <li class="p-globalNav__menu is-selected">
+                            <?php
+                            if (is_front_page()) {
+                                $add_class_selected = "is-selected";
+                            } else {
+                                $add_class_selected = "";
+                            }
+                            ?>
+                            <li class="p-globalNav__menu <?php echo $add_class_selected; ?>">
                                 <a href="<?php echo esc_url(home_url('/')); ?>">
                                     <?php echo get_image_html('/images/common/panda.svg', 'HOME'); ?>
                                     <span>HOME</span>
                                 </a>
                             </li>
-                            <li class="p-globalNav__menu">
+                            <?php
+                            if (is_home() || is_category()) {
+                                $add_class_selected = "is-selected";
+                            } else {
+                                $add_class_selected = "";
+                            }
+                            ?>
+                            <li class="p-globalNav__menu <?php echo $add_class_selected; ?>">
                                 <a href="<?php echo esc_url(home_url('/info')); ?>">
                                     <?php echo get_image_html('/images/common/map.svg', 'ご案内'); ?>
                                     <span>ご案内</span>
                                 </a>
                             </li>
-                            <li class="p-globalNav__menu js-subMenu">
+                            <?php
+                            if (is_post_type_archive('animals') || is_tax(array('genre', 'condition'))) {
+                                $add_class_selected = "is-selected";
+                            } else {
+                                $add_class_selected = "";
+                            }
+                            ?>
+                            <li class="p-globalNav__menu js-subMenu <?php echo $add_class_selected; ?>">
                                 <a href="<?php echo esc_url(home_url('/animals')); ?>">
                                     <?php echo get_image_html('/images/common/animals.svg', '動物たち'); ?>
                                     <span>動物たち</span>
                                 </a>
                                 <div class="p-globalNav__nav">
                                     <ul class="p-globalNav__subMenus">
-                                        <li class="p-globalNav__subMenu">
-                                            <a href="<?php echo esc_url(home_url('/')); ?>"><span>・パンダ</span></a>
-                                        </li>
-                                        <li class="p-globalNav__subMenu">
-                                            <a href="<?php echo esc_url(home_url('/')); ?>"><span>・キリン</span></a>
-                                        </li>
-                                        <li class="p-globalNav__subMenu">
-                                            <a href="<?php echo esc_url(home_url('/')); ?>"><span>・レッサーパンダ</span></a>
-                                        </li>
-                                        <li class="p-globalNav__subMenu">
-                                            <a href="<?php echo esc_url(home_url('/')); ?>"><span>・ゴリラ</span></a>
-                                        </li>
-                                        <li class="p-globalNav__subMenu">
-                                            <a href="<?php echo esc_url(home_url('/')); ?>"><span>・ハシビロコウ</span></a>
-                                        </li>
-                                        <li class="p-globalNav__subMenu">
-                                            <a href="<?php echo esc_url(home_url('/')); ?>"><span>・カピバラ</span></a>
-                                        </li>
+                                        <?php
+                                        $arg = array(
+                                            'taxonomy' => 'genre',
+                                            'orderby' => 'ID',
+                                            'order' => 'DESC',
+                                        );
+                                        $terms = get_terms($arg);
+                                        ?>
+                                        <?php if (!is_wp_error($terms)) : ?>
+                                            <?php foreach ($terms as $term) : ?>
+                                                <?php $term_link = get_term_link($term); ?>
+                                                <li class="p-globalNav__subMenu">
+                                                    <a href="<?php echo esc_url($term_link); ?>"><span>・<?php echo $term->name; ?></span></a>
+                                                </li>
+                                            <?php endforeach; ?>
+                                        <?php endif; ?>
                                     </ul>
                                 </div>
                             </li>
-                            <li class="p-globalNav__menu">
+                            <?php
+                            if (is_page('about')) {
+                                $add_class_selected = "is-selected";
+                            } else {
+                                $add_class_selected = "";
+                            }
+                            ?>
+                            <li class="p-globalNav__menu <?php echo $add_class_selected; ?>">
                                 <a href="<?php echo esc_url(home_url('/about')); ?>">
                                     <?php echo get_image_html('/images/common/star.svg', '園について'); ?>
                                     <span>園について</span>
@@ -123,24 +149,22 @@
                                             <span>動物たち</span>
                                         </a>
                                         <ul class="p-drawer__subMenus">
-                                            <li class="p-drawer__subMenu">
-                                                <a href="<?php echo esc_url(home_url('/')); ?>"><span>・パンダ</span></a>
-                                            </li>
-                                            <li class="p-drawer__subMenu">
-                                                <a href="<?php echo esc_url(home_url('/')); ?>"><span>・キリン</span></a>
-                                            </li>
-                                            <li class="p-drawer__subMenu">
-                                                <a href="<?php echo esc_url(home_url('/')); ?>"><span>・レッサーパンダ</span></a>
-                                            </li>
-                                            <li class="p-drawer__subMenu">
-                                                <a href="<?php echo esc_url(home_url('/')); ?>"><span>・ゴリラ</span></a>
-                                            </li>
-                                            <li class="p-drawer__subMenu">
-                                                <a href="<?php echo esc_url(home_url('/')); ?>"><span>・ハシビロコウ</span></a>
-                                            </li>
-                                            <li class="p-drawer__subMenu">
-                                                <a href="<?php echo esc_url(home_url('/')); ?>"><span>・カピバラ</span></a>
-                                            </li>
+                                            <?php
+                                            $arg = array(
+                                                'taxonomy' => 'genre',
+                                                'orderby' => 'ID',
+                                                'order' => 'DESC',
+                                            );
+                                            $terms = get_terms($arg);
+                                            ?>
+                                            <?php if (!is_wp_error($terms)) : ?>
+                                                <?php foreach ($terms as $term) : ?>
+                                                    <?php $term_link = get_term_link($term); ?>
+                                                    <li class="p-drawer__subMenu">
+                                                        <a href="<?php echo esc_url($term_link); ?>"><span>・<?php echo $term->name; ?></span></a>
+                                                    </li>
+                                                <?php endforeach; ?>
+                                            <?php endif; ?>
                                         </ul>
                                     </li>
                                     <li class="p-drawer__menu">

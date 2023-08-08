@@ -133,7 +133,7 @@
                                             <p class="p-card__date-update">更新日：<?php the_modified_date('Y.m.d') ?></p>
                                         </div>
                                         <div class="p-card__tag c-tag">
-                                            <a href="<?php echo esc_url($term_link); ?>"><?php echo $terms[0]->name; ?>
+                                            <a href="<?php echo esc_url($term_link); ?>"><?php echo $terms[0]->name; ?></a>
                                         </div>
                                         <h3 class="p-card__title"><?php the_title(); ?></h3>
                                         <p class="p-card__text c-text"><?php the_excerpt(); ?>
