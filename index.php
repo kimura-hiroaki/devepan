@@ -4,108 +4,7 @@
         <div class="p-mv">
             <div class="p-mv__inner l-inner">
                 <div class="p-mv__wrap">
-                    <div class="p-mv__content">
-                        <div class="p-content">
-                            <div class="p-content__date">
-                                <p class="p-content__today">TODAY</p>
-                                <div class="p-content__month">
-                                    <span><?php echo get_japan_time('year'); ?></span>
-                                    <span><?php echo get_japan_time('month'); ?></span>
-                                </div>
-                                <div class="p-content__day">
-                                    <span><?php echo get_japan_dayofweek(); ?></span>
-                                    <span><?php echo get_japan_time('day'); ?></span>
-                                </div>
-                            </div>
-                            <div class="p-content__tag c-tag">
-                                <?php if (is_openGarden()) {
-                                    echo '今日は開園日';
-                                } else {
-                                    echo '今日は閉園日';
-                                }
-                                ?>
-                            </div>
-                            <div class="p-content__box">
-                                <div class="p-content__box-head">週刊旬予報</div>
-                                <div class="p-content__box-main">
-                                    <?php
-                                    $args = array(
-                                        'post_type' => array('post', 'animals'),
-                                        'posts_per_page' => 3,
-                                        'date_query' => array(
-                                            array(
-                                                'before' => 'now',
-                                                'after' => '1 week ago',
-                                                'inclusive' => true, // その日を含めるかどうか
-                                            )
-                                        )
-                                    );
-                                    $query = new WP_Query($args);
-                                    ?>
-                                    <?php if ($query->have_posts()) : ?>
-                                        <?php while ($query->have_posts()) : ?>
-                                            <?php $query->the_post(); ?>
-                                            <p class="p-content__box-text"><?php the_title(); ?></p>
-                                        <?php endwhile; ?>
-                                        <?php wp_reset_postdata(); ?>
-                                    <?php endif; ?>
-                                </div>
-                            </div>
-                            <?php
-                            $daily_post_ids = get_posts_daily_random();
-                            $daily_post_id = $daily_post_ids[0]; //今回は1投稿だが念のため
-                            var_dump($daily_post_id);
-                            $daily_post_date = get_post($daily_post_id);
-                            echo $daily_post_date->post_title;
-                            $daily_post_thumbnail_id = get_post_thumbnail_id($daily_post_id);
-                            $daily_post_thumbnail_url = get_the_post_thumbnail_url($daily_post_id, 'medium');
-                            ?>
-                            <div class="p-content__pickup">
-                                <figure class="p-content__star">
-                                    <?php echo get_image_html('/images/common/bigStar.svg', '星のイラスト') ?>
-                                </figure>
-                                <div class="p-content__title">
-                                    <?php echo get_image_html('/images/common/pickup.svg', '今日のピックアップ動物') ?>
-                                </div>
-                                <figure class="p-content__img">
-                                    <?php if ($daily_post_thumbnail_id) : ?>
-                                        <img src="<?php echo esc_url($daily_post_thumbnail_url); ?>" alt="今日のピックアップ動物の写真" />
-                                    <?php else : ?>
-                                        <img src="<?php echo esc_url(get_template_directory_uri() . '/images/noimg.png'); ?>" alt="no-image">
-                                    <?php endif; ?>
-                                </figure>
-                            </div>
-                            <div class="p-content__sns">
-                                <div class="p-content__sns-title">SNS</div>
-                                <ul class="p-content__sns-links">
-                                    <?php if (is_setSNS('instagram')) : ?>
-                                        <?php $instagram_url = get_theme_mod('instagram', null); ?>
-                                        <li class="p-content__sns-link">
-                                            <a href="<?php echo esc_url($instagram_url); ?>" target="_blank">
-                                                <?php echo get_image_html('/images/common/instagram.svg', 'instagram') ?>
-                                            </a>
-                                        </li>
-                                    <?php endif; ?>
-                                    <?php if (is_setSNS('facebook')) : ?>
-                                        <?php $facebook_url = get_theme_mod('facebook', null); ?>
-                                        <li class="p-content__sns-link">
-                                            <a href="<?php echo esc_url($facebook_url); ?>" target="_blank">
-                                                <?php echo get_image_html('/images/common/facebook.svg', 'facebook') ?>
-                                            </a>
-                                        </li>
-                                    <?php endif; ?>
-                                    <?php if (is_setSNS('twitter')) : ?>
-                                        <?php $twitter_url = get_theme_mod('twitter', null); ?>
-                                        <li class="p-content__sns-link">
-                                            <a href="<?php echo esc_url($twitter_url); ?>" target="_blank">
-                                                <?php echo get_image_html('/images/common/twitter.svg', 'twitter') ?>
-                                            </a>
-                                        </li>
-                                    <?php endif; ?>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+                    <?php get_template_part("template-parts/mv-content"); ?>
                     <div class="p-mv__items js-mv-slider">
                         <?php for ($i = 1; $i < 4; $i++) : ?>
                             <?php $mainview = "mainview_{$i}"; ?>
@@ -135,33 +34,35 @@
                     </div>
                 </div>
                 <div class="p-info__units">
-                    <div class="p-info__unit">
-                        <a href="#">
-                            <div class="p-info__unit-number">
-                                <span>01</span>
+                    <?php
+                    $args = array(
+                        'post_type' => 'post',
+                        'posts_per_page' => 3,
+                    );
+                    $query = new WP_Query($args);
+                    $i = 1;
+                    ?>
+                    <?php if ($query->have_posts()) : ?>
+                        <?php while ($query->have_posts()) : ?>
+                            <?php
+                            $query->the_post();
+                            $category = get_the_category();
+                            ?>
+                            <div class="p-info__unit">
+                                <a href="<?php the_permalink(); ?>">
+                                    <div class="p-info__unit-number">
+                                        <span>0<?php echo $i; ?></span>
+                                    </div>
+                                    <div class="p-info__unit-tag c-tag">
+                                        <object><?php my_the_post_category(true) ?></object>
+                                    </div>
+                                    <p class="p-info__unit-text c-text"><?php the_title(); ?></p>
+                                </a>
                             </div>
-                            <div class="p-info__unit-tag c-tag">イベント</div>
-                            <p class="p-info__unit-text c-text">世界ゴリラの日祭りを開催</p>
-                        </a>
-                    </div>
-                    <div class="p-info__unit">
-                        <a href="#">
-                            <div class="p-info__unit-number">
-                                <span>02</span>
-                            </div>
-                            <div class="p-info__unit-tag c-tag">動物のこと</div>
-                            <p class="p-info__unit-text c-text">キリンの赤ちゃんの名前決定！</p>
-                        </a>
-                    </div>
-                    <div class="p-info__unit">
-                        <a href="#">
-                            <div class="p-info__unit-number">
-                                <span>03</span>
-                            </div>
-                            <div class="p-info__unit-tag c-tag">園内情報</div>
-                            <p class="p-info__unit-text c-text">パンダ厩舎の工事が始まります</p>
-                        </a>
-                    </div>
+                            <?php $i += 1; ?>
+                        <?php endwhile; ?>
+                        <?php wp_reset_postdata(); ?>
+                    <?php endif; ?>
                 </div>
                 <div class="p-info__tree01 u-desktop">
                     <img src="<?php echo get_template_directory_uri(); ?>/images/top/info_tree_01.png" alt="木のイラスト" />
@@ -187,7 +88,7 @@
                 <div class="p-about__inner l-inner">
                     <div class="p-about__title">
                         <div class="c-title">
-                            <h2 class="c-title__ja"><?php echo $title ?></h2>
+                            <h2 class="c-title__ja"><?php echo $title; ?></h2>
                             <div class="c-title__img">
                                 <img src="<?php echo esc_url(get_template_directory_uri() . '/images/common/title.svg'); ?>" alt="足跡のイラスト" />
                             </div>
@@ -198,7 +99,7 @@
                         <?php echo $excerpt ?>
                     </p>
                     <div class="p-about__btn">
-                        <a href="#" class="c-btn"> もっと見る </a>
+                        <a href="<?php echo esc_url(home_url('/about')); ?>" class="c-btn"> もっと見る </a>
                     </div>
                     <div class="p-about__map">
                         <picture class="p-about__map-tag">
@@ -229,87 +130,91 @@
                         <p class="c-title__en">about animals</p>
                     </div>
                 </div>
-                <div class="p-animals__cards">
-                    <div class="p-animals__wrap">
-                        <div class="p-animals__card">
-                            <div class="p-animals__card--top">
-                                <figure class="p-animals__card-img">
-                                    <img src="<?php echo get_template_directory_uri(); ?>/images/top/top_panda.jpg" alt="パンダ" />
-                                </figure>
-                                <div class="p-animals__card--date c-tag c-tag--none">2022.06.10</div>
+                <?php if (get_field('animal') != "") : ?>
+                    <?php $choice_animals = get_field('animal'); ?>
+                    <div class="p-animals__cards">
+                        <?php for ($i = 1; $i < 3; $i++) : ?>
+                            <?php
+                            $choice_name = "choice_{$i}";
+                            $choice_animal_id = $choice_animals[$choice_name];
+                            $choice_animal_data = get_post($choice_animal_id);
+                            $title = $choice_animal_data->post_title;
+                            $thumbnail_id = get_post_thumbnail_id($choice_animal_id);
+                            $thumbnail_url = get_the_post_thumbnail_url($choice_animal_id, 'full');
+                            $time = date('Y.m.d', strtotime($choice_animal_data->post_date));
+                            $excerpt = $choice_animal_data->post_excerpt;
+                            $area = get_area($choice_animal_id);
+                            $tags = get_the_terms($choice_animal_id, 'item_tag');
+                            ?>
+                            <div class="p-animals__cards">
+                                <div class="
+                                <?php
+                                if ($i == 1) {
+                                    echo 'p-animals__wrap';
+                                } else {
+                                    echo 'p-animals__wrap p-animals__wrap--reverse';
+                                }
+                                ?>
+                                ">
+                                    <div class="p-animals__card">
+                                        <div class="p-animals__card--top">
+                                            <figure class="p-animals__card-img">
+                                                <?php if ($thumbnail_id) : ?>
+                                                    <img src="<?php echo esc_url($thumbnail_url); ?>" alt="<?php echo $title; ?>" />
+                                                <?php else : ?>
+                                                    <img src="<?php echo esc_url(get_template_directory_uri() . '/images/noimg.png'); ?>" alt="no-image">
+                                                <?php endif; ?>
+                                            </figure>
+                                            <div class="p-animals__card--date c-tag c-tag--none"><?php echo $time; ?></div>
+                                        </div>
+                                        <div class="p-animals__card--bottom">
+                                            <?php if (!empty($tags) && !is_wp_error($tags)) : ?>
+                                                <?php foreach ($tags as $tag) : ?>
+                                                    <div class="p-animals__card-tag c-tag c-tag--cat">#<?php echo $tag->name; ?>
+                                                    </div>
+                                                <?php endforeach; ?>
+                                            <?php endif; ?>
+                                        </div>
+                                    </div>
+                                    <div class="
+                                <?php
+                                if ($i == 1) {
+                                    echo 'p-animals__card p-animals__card--sub';
+                                } else {
+                                    echo 'p-animals__card p-animals__card--sub p-animals__card--sub02';
+                                }
+                                ?>
+                                ">
+                                        <h3 class="p-animals__card-title">動物名：<?php echo $title ?></h3>
+                                        <p class="p-animals__card-area">出没エリア：<?php echo $area; ?></p>
+                                        <p class="p-animals__card-text c-text">
+                                            <?php echo $excerpt; ?>
+                                        </p>
+                                        <div class="p-animals__card-btn">
+                                            <a href="<?php echo esc_url(get_permalink($choice_animal_id)); ?>" class="c-btn">
+                                                もっと見る
+                                                <img src="<?php echo get_template_directory_uri(); ?>/images/common/news-arrow2.svg" alt="" />
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <?php if ($i == 1) : ?>
+                                    <hr class="p-animals__border" />
+                                <?php endif; ?>
                             </div>
-                            <div class="p-animals__card--bottom">
-                                <div class="p-animals__card-tag c-tag c-tag--cat">#動物と遊ぶ</div>
-                                <div class="p-animals__card-tag c-tag c-tag--cat">#かわいい</div>
-                                <div class="p-animals__card-tag c-tag c-tag--cat">#白黒</div>
-                                <div class="p-animals__card-tag c-tag c-tag--cat">#動物園</div>
-                                <div class="p-animals__card-tag c-tag c-tag--cat">#笹</div>
-                                <div class="p-animals__card-tag c-tag c-tag--cat">#ふわふわ</div>
-                                <div class="p-animals__card-tag c-tag c-tag--cat">#木登り</div>
-                            </div>
+                        <?php endfor; ?>
+                        <div class="p-animals__tree01 u-desktop">
+                            <img src="<?php echo get_template_directory_uri(); ?>/images/top/animals_tree_01.png" alt="木のイラスト" />
                         </div>
-                        <div class="p-animals__card p-animals__card--sub">
-                            <h3 class="p-animals__card-title">動物名：リンリン</h3>
-                            <p class="p-animals__card-area">出没エリア：パンダエリア</p>
-                            <p class="p-animals__card-text c-text">
-                                リンリンは園に来た時からおてんば娘。<br />
-                                木登りが大好きですが、木から降りれなくて飼育員に助けられることもしばしば。<br />
-                                そんなリンリンですがとってもかわいい子なので見に来てみては？<br />
-                            </p>
-                            <div class="p-animals__card-btn">
-                                <a href="#" class="c-btn">
-                                    もっと見る
-                                    <img src="<?php echo get_template_directory_uri(); ?>/images/common/news-arrow2.svg" alt="" />
-                                </a>
-                            </div>
+                        <div class="p-animals__tree02 u-desktop">
+                            <img src="<?php echo get_template_directory_uri(); ?>/images/top/animals_tree_02.png" alt="木のイラスト" />
+                        </div>
+                        <div class="p-animals__tree03 u-desktop">
+                            <img src="<?php echo get_template_directory_uri(); ?>/images/top/animals_tree_03.png" alt="木のイラスト" />
                         </div>
                     </div>
-                    <hr class="p-animals__border" />
-                    <div class="p-animals__wrap p-animals__wrap--reverse">
-                        <div class="p-animals__card">
-                            <div class="p-animals__card--top">
-                                <figure class="p-animals__card-img">
-                                    <img src="<?php echo get_template_directory_uri(); ?>/images/top/top_lesserpansa.jpg" alt="レッサーパンダ" />
-                                </figure>
-                                <div class="p-animals__card--date c-tag c-tag--none">2022.06.10</div>
-                            </div>
-                            <div class="p-animals__card--bottom">
-                                <div class="p-animals__card-tag c-tag c-tag--cat">#キュート</div>
-                                <div class="p-animals__card-tag c-tag c-tag--cat">#癒し</div>
-                                <div class="p-animals__card-tag c-tag c-tag--cat">#かわいい</div>
-                                <div class="p-animals__card-tag c-tag c-tag--cat">#木登り</div>
-                                <div class="p-animals__card-tag c-tag c-tag--cat">#茶色</div>
-                                <div class="p-animals__card-tag c-tag c-tag--cat">#ふわふわ</div>
-                            </div>
-                        </div>
-                        <div class="p-animals__card p-animals__card--sub p-animals__card--sub02">
-                            <h3 class="p-animals__card-title">動物名：風間くん</h3>
-                            <p class="p-animals__card-area">出没エリア：レッサーの森</p>
-                            <p class="p-animals__card-text c-text">
-                                風太くんはレッサーの森のお父さん。一番威厳のあるはずなのによく眠っていて、子供たちのおもちゃにされてしまいます。<br />
-                                でも、優しい風太くんは叱りません。<br />
-                                子供たちはそのおかげでいたずらさんになっちゃいました。
-                            </p>
-                            <div class="p-animals__card-btn">
-                                <a href="<?php echo esc_url(home_url('/about')); ?>" class="c-btn">
-                                    もっと見る
-                                    <img src="<?php echo get_template_directory_uri(); ?>/images/common/news-arrow2.svg" alt="" />
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="p-animals__tree01 u-desktop">
-                    <img src="<?php echo get_template_directory_uri(); ?>/images/top/animals_tree_01.png" alt="木のイラスト" />
-                </div>
-                <div class="p-animals__tree02 u-desktop">
-                    <img src="<?php echo get_template_directory_uri(); ?>/images/top/animals_tree_02.png" alt="木のイラスト" />
-                </div>
-                <div class="p-animals__tree03 u-desktop">
-                    <img src="<?php echo get_template_directory_uri(); ?>/images/top/animals_tree_03.png" alt="木のイラスト" />
-                </div>
+                <?php endif; ?>
             </div>
-        </div>
     </section>
     <section class="l-access">
         <div class="p-access">

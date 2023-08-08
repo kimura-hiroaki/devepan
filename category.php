@@ -9,8 +9,8 @@
                         <div class="p-mv__top">
                             <div class="p-mv__top-head">
                                 <div class="c-title">
-                                    <h2 class="c-title__ja">ご案内</h2>
-                                    <p class="c-title__en">information</p>
+                                    <h2 class="c-title__ja"><?php echo $category->cat_name; ?></h2>
+                                    <p class="c-title__en"><?php echo $category->slug; ?></p>
                                 </div>
                             </div>
                             <p class="p-mv__top-text c-text">デベパン動物園の今を発信。テキストテキストテキスト</p>

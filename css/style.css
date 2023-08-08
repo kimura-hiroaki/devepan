@@ -171,6 +171,7 @@ main {
 	line-height: 1.4642857143;
 }
 
+.wpcf7-form-control,
 .c-btn {
 	-webkit-box-align: center;
 	-ms-flex-align: center;
@@ -1496,6 +1497,7 @@ main {
 	margin-top: 2.5rem;
 }
 
+.p-form__text--thanks,
 .p-form__text {
 	font-size: 16px;
 	font-size: 1rem;
@@ -1506,6 +1508,10 @@ main {
 	color: #fff;
 }
 
+.p-form__text--thanks a {
+	color: blue;
+}
+
 .p-form__btn {
 	margin: 0 auto;
 	margin-top: 60px;
@@ -1514,6 +1520,7 @@ main {
 	max-width: 21.5625rem;
 }
 
+.p-form__btn .wpcf7-form-control,
 .p-form__btn .c-btn {
 	font-size: 20px;
 	font-size: 1.25rem;
@@ -2443,12 +2450,14 @@ main {
 		opacity: 0.7;
 	}
 
+	.wpcf7-form-control,
 	.c-btn {
 		font-size: 1rem;
 		line-height: 1.625;
 		padding: 1rem 0;
 	}
 
+	.wpcf7-form-control:hover,
 	.c-btn:hover {
 		background-color: #F8DC27;
 		color: #000;
@@ -2850,9 +2859,14 @@ main {
 		margin-top: 5rem;
 	}
 
+	.p-form__text--thanks,
 	.p-form__text {
 		margin: 0 auto;
 		max-width: 44rem;
+	}
+
+	.p-form__text--thanks {
+		padding-top: 1rem;
 	}
 
 	.p-form__btn {

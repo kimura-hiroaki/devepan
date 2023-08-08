@@ -4,39 +4,7 @@
         <div class="p-mv">
             <div class="p-mv__inner l-inner">
                 <div class="p-mv__wrap">
-                    <div class="p-mv__content">
-                        <div class="p-content">
-                            <div class="p-content__top">
-                                <div class="c-title">
-                                    <h2 class="c-title__ja">動物たち</h2>
-                                    <p class="c-title__en">Animals</p>
-                                </div>
-                            </div>
-                            <div class="p-content__date p-content__date--animals">
-                                <p class="p-content__today">TODAY</p>
-                                <div class="p-content__month">
-                                    <span>2022</span>
-                                    <span>9</span>
-                                </div>
-                                <div class="p-content__day">
-                                    <span>FRY</span>
-                                    <span>30</span>
-                                </div>
-                            </div>
-                            <div class="p-content__tag c-tag">今日は開園日</div>
-                            <div class="p-content__pickup">
-                                <figure class="p-content__star">
-                                    <img src="./images/common/bigStar.svg" alt="星のイラスト" />
-                                </figure>
-                                <div class="p-content__title">
-                                    <img src="./images/common/pickup.svg" alt="今日のピックアップ動物" />
-                                </div>
-                                <figure class="p-content__img">
-                                    <img src="./images/common/mv_02.png" alt="今日のピックアップ動物の写真" />
-                                </figure>
-                            </div>
-                        </div>
-                    </div>
+                    <?php get_template_part("template-parts/mv-content"); ?>
                     <div class="p-mv__main">
                         <div class="p-mv__top">
                             <div class="p-mv__top-head">
@@ -173,6 +141,7 @@
                                 </a>
                             </div>
                         <?php endwhile; ?>
+                        <?php wp_reset_postdata(); ?>
                     <?php else : ?>
                         <div>
                             <p>該当する内容がありません。</p>
@@ -180,9 +149,10 @@
                     <?php endif; ?>
                 </div>
                 <div class="p-cards__nav">
-                    <?php get_template_part("template-parts/pagination"); ?>
+                    <div class="p-nav">
+                        <?php the_display_pagenation($query); ?>
+                    </div>
                 </div>
-                <?php wp_reset_postdata(); ?>
             </div>
         </div>
     </div>

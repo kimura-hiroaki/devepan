@@ -1,3 +1,8 @@
+<?php
+/*
+Template Name: confirm
+*/
+?>
 <?php get_header(); ?>
 <main>
     <div class="l-mv">
@@ -20,11 +25,11 @@
                 <div class="p-contact__box">
                     <div class="p-contact__head">
                         <div class="p-contact__step">
-                            <div class="p-contact__step-item is-checked">
+                            <div class="p-contact__step-item">
                                 <div class="p-contact__step-check"></div>
                                 <p class="p-contact__step-text">入力</p>
                             </div>
-                            <div class="p-contact__step-item">
+                            <div class="p-contact__step-item is-checked">
                                 <div class="p-contact__step-check"></div>
                                 <p class="p-contact__step-text">確認</p>
                             </div>
@@ -35,7 +40,7 @@
                         </div>
                     </div>
                     <div class="p-contact__main">
-                        <?php echo do_shortcode('[contact-form-7 id="2719ca6" title="contact"]'); ?>
+                        <?php echo do_shortcode('[contact-form-7 id="7d6251d" title="confirm"]'); ?>
                     </div>
                 </div>
             </div>

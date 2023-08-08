@@ -127,6 +127,54 @@ function is_setSNS($sns_name)
 }
 
 /********************
+ *ACF関連
+ ***********************/
+//　選択リストを取得する(choice_1)
+function acf_load_choice_1_field_choices($field)
+{
+    $field['choices'] = array();
+    $args = array(
+        'posts_per_page' => -1,
+        'post_type' => 'animals',
+    );
+    $posts = get_posts($args);
+    $i = 0;
+    foreach ($posts as $post) :
+        setup_postdata($post);
+        $field['choices'][$post->ID] = $post->post_title;
+        $i += $i;
+    endforeach;
+    wp_reset_postdata();
+
+    return $field;
+}
+
+add_filter('acf/load_field/name=choice_1', 'acf_load_choice_1_field_choices');
+
+//　選択リストを取得する(choice_2)
+function acf_load_choice_2_field_choices($field)
+{
+    $field['choices'] = array();
+    $args = array(
+        'posts_per_page' => -1,
+        'post_type' => 'animals',
+    );
+    $posts = get_posts($args);
+    $i = 0;
+    foreach ($posts as $post) :
+        setup_postdata($post);
+        $field['choices'][$post->ID] = $post->post_title;
+        $i += $i;
+    endforeach;
+    wp_reset_postdata();
+
+    return $field;
+}
+
+add_filter('acf/load_field/name=choice_2', 'acf_load_choice_2_field_choices');
+
+
+/********************
  *Breacrumb navXT関連
  ***********************/
 /*
@@ -288,6 +336,19 @@ function subroopPagination($end_size = 2, $mid_size = 1, $prev_next = true)
 }
 */
 
+//投稿IDから出没エリア取得
+function get_area($id)
+{
+    // カスタムフィールドのキーを指定
+    $custom_field_key = 'area';
+
+    // 投稿ページのカスタムフィールドの値を取得
+    $custom_field_value = get_post_meta($id, $custom_field_key, true);
+
+    // カスタムフィールドの値を表示
+    return $custom_field_value;
+}
+
 // アーカイブタイトル書き換え
 function my_archive_title($title)
 {
@@ -323,9 +384,9 @@ function my_the_post_category($anchor = true)
     $category = get_the_category();
     if ($category[0]) {
         if ($anchor) {
-            echo '<a href="' . get_category_link($category[0]->term_id) . '">' . $category[0]->cat_name . '</a>';
+            echo '<a href="' . esc_url(get_category_link($category[0]->term_id)) . '">' . $category[0]->cat_name . '</a>';
         } else {
-            echo $category[0]->cat_name;
+            echo $category[0]->name;
         }
     }
 }
@@ -375,18 +436,41 @@ function my_searchform_shortcode($attrs, $content = '')
 
 add_shortcode('search_form', 'my_searchform_shortcode');
 
+// ページネーションの表示
+function the_display_pagenation($query)
+{
+    $prev_image_html = get_image_html('/images/common/prev-arrow2.svg', '前のページへ');
+    $prev_text = '前のページへ';
+    $prev_link_title = $prev_image_html . '<span>' . $prev_text . '</span>';
+    $next_image_html = get_image_html('/images/common/next-arrow2.svg', '次のページへ');
+    $next_text = '次のページへ';
+    $next_link_title = '<span>' . $next_text . '</span>' . $next_image_html;
+    $big = 9999999999;
+    $arg = array(
+        'base' => str_replace($big, '%#%', esc_url(get_pagenum_link($big))),
+        'format' => '?page=%#%',
+        'current' => max(1, get_query_var('paged')),
+        'total'   => $query->max_num_pages,
+        'type'    => 'list',
+        'mid_size' => 0,
+        'prev_next' => true,
+        'prev_text' => $prev_link_title,
+        'next_text' => $next_link_title,
+    );
+    echo paginate_links($arg);
+}
+
 // 日毎にランダムに投稿IDを取得
 function get_posts_daily_random()
 {
     $transient = 'my_daily_random_posts';
     $ids = get_transient($transient);
     if ($ids === false) {
-        $seed = random_int(PHP_INT_MIN, PHP_INT_MAX);
         $arg = array(
             'fields' => 'ids',
             'post_type' => 'animals',
             'posts_per_page' => 1,
-            'orderby' => 'RAND(' . $seed . ')',
+            'orderby' => 'rand',
         );
         $ids = get_posts($arg);
         if ($ids) {

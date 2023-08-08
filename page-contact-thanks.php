@@ -1,3 +1,10 @@
+<?php
+/*
+
+Template Name: thanks
+
+*/
+?>
 <?php get_header(); ?>
 <main>
     <div class="l-mv">
@@ -20,7 +27,7 @@
                 <div class="p-contact__box">
                     <div class="p-contact__head">
                         <div class="p-contact__step">
-                            <div class="p-contact__step-item is-checked">
+                            <div class="p-contact__step-item">
                                 <div class="p-contact__step-check"></div>
                                 <p class="p-contact__step-text">入力</p>
                             </div>
@@ -28,14 +35,20 @@
                                 <div class="p-contact__step-check"></div>
                                 <p class="p-contact__step-text">確認</p>
                             </div>
-                            <div class="p-contact__step-item">
+                            <div class="p-contact__step-item is-checked">
                                 <div class="p-contact__step-check"></div>
                                 <p class="p-contact__step-text">完了</p>
                             </div>
                         </div>
                     </div>
                     <div class="p-contact__main">
-                        <?php echo do_shortcode('[contact-form-7 id="2719ca6" title="contact"]'); ?>
+                        <p class="p-form__text--thanks">
+                            お問い合わせありがとうございます。<br>
+                            2日以内に担当者からメールにてご連絡いたしますので、しばらくお待ちいただけますと幸いです。
+                        </p>
+                        <p class="p-form__text--thanks">→
+                            <a href="<?php echo home_url('/'); ?>" class="p-contact__message__text--link">トップへ戻る</a>
+                        </p>
                     </div>
                 </div>
             </div>
