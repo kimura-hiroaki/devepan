@@ -88,7 +88,7 @@
         <div class="p-cards">
             <div class="p-cards__inner l-inner">
                 <div class="p-cards__wrap">
-                    <?php $query = new WP_Query($args); ?>
+                    <?php $query = new WP_Query($search_args); ?>
                     <?php get_template_part("template-parts/taxonomy-card"); ?>
                 </div>
                 <div class="p-cards__nav">

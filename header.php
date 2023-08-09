@@ -63,7 +63,7 @@
                                 </a>
                             </li>
                             <?php
-                            if (is_post_type_archive('animals') || is_tax(array('genre', 'condition'))) {
+                            if (is_post_type_archive('animals') || is_tax(array('genre', 'condition')) || is_search()) {
                                 $add_class_selected = "is-selected";
                             } else {
                                 $add_class_selected = "";

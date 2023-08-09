@@ -66,14 +66,16 @@
                                 <?php while ($query->have_posts()) : ?>
                                     <?php $query->the_post(); ?>
                                     <div class="p-article__item">
-                                        <?php
-                                        if (has_post_thumbnail()) {
-                                            the_post_thumbnail();
-                                        } else {
-                                            echo get_image_html('/images/noimg.png', 'no-image');
-                                        }
-                                        ?>
-                                        <div class="p-article__item__title"><?php the_title(); ?></div>
+                                        <a href="<?php the_permalink(); ?>">
+                                            <?php
+                                            if (has_post_thumbnail()) {
+                                                the_post_thumbnail();
+                                            } else {
+                                                echo get_image_html('/images/noimg.png', 'no-image');
+                                            }
+                                            ?>
+                                            <div class="p-article__item__title"><?php the_title(); ?></div>
+                                        </a>
                                     </div>
                                 <?php endwhile; ?>
                                 <?php wp_reset_postdata(); ?>
