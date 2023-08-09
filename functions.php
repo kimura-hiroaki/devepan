@@ -485,3 +485,29 @@ function get_posts_daily_random()
     }
     return array();
 }
+
+// タイトル取得（全部に適用するわけでは無いので流用の際は注意）
+function get_page_title($language = "ja")
+{
+    if (is_home()) {
+        $title_ja = "ご案内";
+        $title_en = "information";
+    } elseif (is_category()) {
+        $category = get_the_category();
+        $category = $category[0];
+        $title_ja = $category->cat_name;
+        $title_en = $category->slug;
+    } elseif (is_tax()) {
+        $page_object = get_queried_object();
+        $title_ja = $page_object->name;
+        $title_en = $page_object->slug;
+    } else {
+        $title_ja = "動物たち";
+        $title_en = "animals";
+    }
+    if ($language !== "ja") {
+        return $title_en;
+    } else {
+        return $title_ja;
+    }
+}

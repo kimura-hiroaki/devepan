@@ -3,31 +3,8 @@
         <?php if (!is_front_page()) : ?>
             <div class="p-content__top">
                 <div class="c-title">
-                    <?php if (is_home()) : ?>
-                        <h2 class="c-title__ja">ご案内</h2>
-                        <p class="c-title__en">information</p>
-                    <?php elseif (is_category()) : ?>
-                        <?php
-                        $category = get_the_category();
-                        $category = $category[0];
-                        ?>
-                        <h2 class="c-title__ja"><?php echo $category->cat_name; ?></h2>
-                        <p class="c-title__en"><?php echo $category->slug; ?></p>
-                    <?php elseif (is_tax()) : ?>
-                        <?php $page_object = get_queried_object(); ?>
-                        <h2 class="c-title__ja"><?php echo $page_object->name ?></h2>
-                        <p class="c-title__en"><?php echo $page_object->slug ?></p>
-                    <?php elseif (is_archive('animals')) : ?>
-                        <?php
-                        $post_type_name = post_type_archive_title('', false);
-                        $post_type_slug = get_query_var('post_type');
-                        ?>
-                        <h2 class="c-title__ja"><?php echo $post_type_name ?></h2>
-                        <p class="c-title__en"><?php echo $post_type_slug ?></p>
-                    <?php else : ?>
-                        <h2 class="c-title__ja">ご案内</h2>
-                        <p class="c-title__en">information</p>
-                    <?php endif; ?>
+                    <h2 class="c-title__ja"><?php echo get_page_title("ja"); ?></h2>
+                    <p class="c-title__en"><?php echo get_page_title("en"); ?></p>
                 </div>
             </div>
         <?php endif; ?>

@@ -13,14 +13,21 @@
                         }
                         ?>
                     </div>
-                    <?php for ($i = 1; $i < 3; $i++) : ?>
-                        <?php $animal_view = "animal_view_{$i}"; ?>
-                        <?php if (get_field($animal_view) != "") : ?>
-                            <div class="p-singleMv__item">
-                                <img src="<?php the_field($animal_view); ?>" alt="メインビュー" />
-                            </div>
-                        <?php endif; ?>
-                    <?php endfor; ?>
+                    <?php $field_name = "mainview" ?>
+                    <?php if (get_field($field_name) != "") : ?>
+                        <?php for ($i = 1; $i < 3; $i++) : ?>
+                            <?php
+                            $mainview = get_field($field_name);
+                            $array_name = "image_{$i}";
+                            $mainview_url = $mainview[$array_name];
+                            ?>
+                            <?php if ($mainview_url != "") : ?>
+                                <div class="p-singleMv__item">
+                                    <img src="<?php echo esc_url($mainview_url); ?>" alt="メインビュー" />
+                                </div>
+                            <?php endif; ?>
+                        <?php endfor; ?>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
@@ -51,7 +58,6 @@
                                 ),
                             )
                         );
-
                         $query = new WP_Query($args);
                         ?>
                         <?php if ($query->have_posts()) : ?>
@@ -70,6 +76,7 @@
                                         <div class="p-article__item__title"><?php the_title(); ?></div>
                                     </div>
                                 <?php endwhile; ?>
+                                <?php wp_reset_postdata(); ?>
                             </div>
                         <?php endif; ?>
                     </div>
@@ -77,12 +84,11 @@
                 <div class="p-article__nav">
                     <div class="p-nav">
                         <div class="p-nav__btn">
-                            <a href="#" class="c-btn">一覧をみる</a>
+                            <a href="<?php echo esc_url(home_url('/animals')); ?>" class="c-btn">一覧をみる</a>
                         </div>
                         <?php get_template_part("template-parts/pagination-single"); ?>
                     </div>
                 </div>
-                <?php wp_reset_postdata(); ?>
             </div>
         </div>
     </div>
