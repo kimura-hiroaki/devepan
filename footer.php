@@ -2,7 +2,9 @@
     <div class="p-footer">
         <div class="p-footer__inner l-inner">
             <div class="p-footer__img">
-                <?php echo get_image_html('/images/common/logo.svg', 'ロゴ'); ?>
+                <a href="<?php echo esc_url(home_url('/')); ?>">
+                    <?php echo get_image_html('/images/common/logo.svg', 'ロゴ'); ?>
+                </a>
             </div>
             <nav class="p-footer__nav">
                 <ul class="p-footer__links">

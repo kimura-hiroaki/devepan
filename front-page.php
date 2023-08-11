@@ -234,7 +234,7 @@
                 </div>
                 <picture class="p-access__map">
                     <source srcset="<?php echo esc_url(get_template_directory_uri() . '/images/top/access_01.jpg'); ?>" media="(min-width:768px)" />
-                    <?php echo get_image_html('/images/top/access_01_sp.png', '地図'); ?>
+                    <?php echo get_image_html('/images/top/access_01_sp.jpg', '地図'); ?>
                 </picture>
                 <div class="p-access__box">
                     <div class="p-access__info">

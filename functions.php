@@ -120,7 +120,7 @@ add_action('customize_register', 'theme_customizer_extension');
 function is_setSNS($sns_name)
 {
     $bool = false;
-    if (get_theme_mod($sns_name, null) !== null) {
+    if (get_theme_mod($sns_name, null) !== "") {
         $bool = true;
     }
     return $bool;
@@ -129,7 +129,7 @@ function is_setSNS($sns_name)
 /********************
  *ACF関連
  ***********************/
-//　選択リストを取得する(choice_1)
+// 選択リストを取得する(choice_1)
 function acf_load_choice_1_field_choices($field)
 {
     $field['choices'] = array();
@@ -151,7 +151,7 @@ function acf_load_choice_1_field_choices($field)
 
 add_filter('acf/load_field/name=choice_1', 'acf_load_choice_1_field_choices');
 
-//　選択リストを取得する(choice_2)
+// 選択リストを取得する(choice_2)
 function acf_load_choice_2_field_choices($field)
 {
     $field['choices'] = array();
@@ -272,7 +272,7 @@ function get_japan_dayofweek()
 }
 
 // 開園日かどうか
-function is_openGarden()
+function is_openZoo()
 {
     $bool = false;
     $day = wp_date('N', null, new DateTimeZone('Asia/Tokyo'));
@@ -495,11 +495,11 @@ function get_page_title($language = "ja")
     } elseif (is_category()) {
         $category = get_the_category();
         $category = $category[0];
-        $title_ja = $category->cat_name;
+        $title_ja = $category->cat_name . "一覧";
         $title_en = $category->slug;
     } elseif (is_tax()) {
         $page_object = get_queried_object();
-        $title_ja = $page_object->name;
+        $title_ja = $page_object->name . "たち";
         $title_en = $page_object->slug;
     } else {
         $title_ja = "動物たち";

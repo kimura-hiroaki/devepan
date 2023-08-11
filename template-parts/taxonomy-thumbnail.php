@@ -14,5 +14,7 @@
     <?php endwhile; ?>
     <?php wp_reset_postdata(); ?>
 <?php else : ?>
-    <?php echo get_image_html('/images/animals/rinrin.jpg', 'パンダ'); ?>
+    <div class="p-mv__slider-item">
+        <?php echo get_image_html('/images/animals/rinrin.jpg', 'パンダ'); ?>
+    </div>
 <?php endif; ?>

@@ -27,7 +27,7 @@
             </div>
         </div>
         <div class="p-content__tag c-tag">
-            <?php if (is_openGarden()) {
+            <?php if (is_openZoo()) {
                 echo '今日は開園日';
             } else {
                 echo '今日は閉園日';
