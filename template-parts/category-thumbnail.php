@@ -13,6 +13,6 @@
     <?php endwhile; ?>
 <?php else : ?>
     <div class="p-mv__slider-item p-mv__slider-item--info">
-        <?php echo get_image_html('/images/animals/rinrin.jpg', 'パンダ'); ?>
+        <?php echo get_image_html('/images/noimg.png', 'no-image'); ?>
     </div>
 <?php endif; ?>

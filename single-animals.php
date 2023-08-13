@@ -50,6 +50,7 @@
                             'post_type' => 'animals',
                             'posts_per_page' => 3,
                             'post__not_in' => array($current_post_id),
+                            'orderby' => 'rand',
                             'tax_query' => array(
                                 array(
                                     'taxonomy' => 'genre',
