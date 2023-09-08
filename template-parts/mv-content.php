@@ -42,13 +42,14 @@
                     $args = array(
                         'post_type' => array('post', 'animals'),
                         'posts_per_page' => 3,
-                        'date_query' => array(
-                            array(
-                                'before' => 'now',
-                                'after' => '1 week ago',
-                                'inclusive' => true, // その日を含めるかどうか
-                            )
-                        )
+                        // ポートフォリオ用に削除
+                        // 'date_query' => array(
+                        //     array(
+                        //         'before' => 'now',
+                        //         'after' => '1 week ago',
+                        //         'inclusive' => true, // その日を含めるかどうか
+                        //     )
+                        //)
                     );
                     $query = new WP_Query($args);
                     ?>

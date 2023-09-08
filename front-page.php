@@ -219,6 +219,7 @@
                     </div>
                 <?php endif; ?>
             </div>
+        </div>
     </section>
     <section class="l-access">
         <div class="p-access">
