@@ -7,13 +7,19 @@
                     <?php get_template_part("template-parts/mv-content"); ?>
                     <div class="p-mv__items js-mv-slider">
                         <?php for ($i = 1; $i < 4; $i++) : ?>
-                            <?php $mainview = "mainview_{$i}"; ?>
-                            <?php $mainviewSP = "mainviewSP_{$i}"; ?>
-                            <?php if (get_field($mainview) != "" || get_field($mainviewSP) != "") : ?>
-                                <picture class="p-mv__item">
-                                    <source srcset="<?php the_field($mainview); ?>" media="(min-width:768px)" />
-                                    <img src="<?php the_field($mainviewSP); ?>" alt="Welcome to DEBEPAN" />
-                                </picture>
+                            <?php $mainview_name = "mainview_{$i}"; ?>
+                            <?php if (get_field($mainview_name)) : ?>
+                                <?php
+                                $mainview = get_field($mainview_name);
+                                $mainview_pc_url = $mainview['pc'];
+                                $mainview_sp_url = $mainview['sp'];
+                                ?>
+                                <?php if ($mainview_pc_url != "" || $mainview_sp_url != "") : ?>
+                                    <picture class="p-mv__item">
+                                        <source srcset="<?php echo esc_url($mainview_pc_url); ?>" media="(min-width:768px)" />
+                                        <img src="<?php echo esc_url($mainview_sp_url); ?>" alt="Welcome to DEBEPAN" />
+                                    </picture>
+                                <?php endif; ?>
                             <?php endif; ?>
                         <?php endfor; ?>
                     </div>
@@ -213,6 +219,7 @@
                     </div>
                 <?php endif; ?>
             </div>
+        </div>
     </section>
     <section class="l-access">
         <div class="p-access">
@@ -228,7 +235,7 @@
                 </div>
                 <picture class="p-access__map">
                     <source srcset="<?php echo esc_url(get_template_directory_uri() . '/images/top/access_01.jpg'); ?>" media="(min-width:768px)" />
-                    <?php echo get_image_html('/images/top/access_01_sp.png', '地図'); ?>
+                    <?php echo get_image_html('/images/top/access_01_sp.jpg', '地図'); ?>
                 </picture>
                 <div class="p-access__box">
                     <div class="p-access__info">
